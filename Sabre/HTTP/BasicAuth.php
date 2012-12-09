@@ -41,6 +41,14 @@ class Sabre_HTTP_BasicAuth extends Sabre_HTTP_AbstractAuth {
         if (!$auth) {
             $auth = $this->httpRequest->getRawServerValue('REDIRECT_HTTP_AUTHORIZATION');
         }
+        
+        //added for webhosters, that dont passing authentication as HTTP variable
+        if (!$auth) {
+            $auth = $this->httpRequest->getRawServerValue('REMOTE_USER');
+        }    	
+		if (!$auth) {
+            $auth = $this->httpRequest->getRawServerValue('REDIRECT_REMOTE_USER');
+        }
 
         if (!$auth) return false;
 
