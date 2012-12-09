@@ -42,6 +42,16 @@ class Sabre_HTTP_BasicAuth extends Sabre_HTTP_AbstractAuth {
             $auth = $this->httpRequest->getRawServerValue('REDIRECT_HTTP_AUTHORIZATION');
         }
 
+        //if APACHE dont rout the HTTP_AUTHORIZATION falg, use this as rewrite rule:
+        //RewriteRule .* - [E=REMOTE_USER:%{HTTP:Authorization},L]
+        //as rewrite rule for getting user auth on sabre dav side in the correct way
+        if (!$auth) {
+            $auth = $this->httpRequest->getRawServerValue('REMOTE_USER');
+        }    	
+		if (!$auth) {
+            $auth = $this->httpRequest->getRawServerValue('REDIRECT_REMOTE_USER');
+        }
+
         if (!$auth) return false;
 
         if (strpos(strtolower($auth),'basic')!==0) return false;
