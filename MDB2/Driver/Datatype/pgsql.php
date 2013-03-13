@@ -312,7 +312,7 @@ class MDB2_Driver_Datatype_pgsql extends MDB2_Driver_Datatype_Common
      */
     function _quoteBoolean($value, $quote, $escape_wildcards)
     {
-        $value = $value ? 't' : 'f';
+        $value = $value ? true : false;
         if (!$quote) {
             return $value;
         }
