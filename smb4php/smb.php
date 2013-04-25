@@ -174,6 +174,7 @@ class smb {
 						)
 						: array();
 					break;
+				// Known SMB error messages (TODO: specific error handling).
 				case 'error':
 					if(substr($regs[0],0,22)=='NT_STATUS_NO_SUCH_FILE'){
 						return false;
@@ -183,8 +184,23 @@ class smb {
 						return false;
 					}elseif(substr($regs[0],0,29)=='NT_STATUS_FILE_IS_A_DIRECTORY'){
 						return false;
+					}elseif(substr($regs[0],0,31)=='NT_STATUS_OBJECT_NAME_NOT_FOUND'){
+						return false;
+					}elseif(substr($regs[0],0,23)=='NT_STATUS_ACCESS_DENIED'){
+						return false;
+					}elseif(substr($regs[0],0,31)=='NT_STATUS_MEDIA_WRITE_PROTECTED'){
+						return false;
+					}else{ // Unknown SMB error message logged.
+						trigger_error($regs[0].' params('.$params.')', E_USER_ERROR);
+						return false;
 					}
-					trigger_error($regs[0].' params('.$params.')', E_USER_ERROR);
+					// Emergency exit - on error giving up by default.
+					return false;
+					break;
+				// Failure with no $tag identified.
+				default:
+					trigger_error("No tag: ".' params('.$params.')', E_USER_ERROR);
+					return false;
 			}
 			if ($i) switch ($i[1]) {
 				case 'file':
