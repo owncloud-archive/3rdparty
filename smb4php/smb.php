@@ -36,6 +36,7 @@ define ('SMB4PHP_AUTHMODE', 'arg'); # set to 'env' to use USER enviroment variab
 ###################################################################
 
 $GLOBALS['__smb_cache'] = array ('stat' => array (), 'dir' => array ());
+$GLOBALS['__tmp_dir'] = ini_get('upload_tmp_dir') ? ini_get('upload_tmp_dir') : sys_get_temp_dir();
 
 class smb {
 
@@ -234,7 +235,7 @@ class smb {
 		switch ($pu['type']) {
 			case 'host':
 				if ($o = smb::look ($pu))
-					$stat = stat ("/tmp");
+					$stat = stat ($__tmp_dir);
 				else
 					trigger_error ("url_stat(): list failed for host '{$pu['host']}'", E_USER_WARNING);
 				break;
@@ -244,7 +245,7 @@ class smb {
 					$lshare = strtolower ($pu['share']);  # fix by Eric Leung
 					foreach ($o['disk'] as $s) if ($lshare == strtolower($s)) {
 						$found = TRUE;
-						$stat = stat ("/tmp");
+						$stat = stat ($__tmp_dir);
 						break;
 					}
 					if (! $found)
@@ -275,7 +276,9 @@ class smb {
 		$url = rtrim($url, '/');
 		global $__smb_cache;
 		$is_file = (strpos ($info['attr'],'D') === FALSE);
-		$s = ($is_file) ? stat ('/etc/passwd') : stat ('/tmp');
+		// Stat results of an existing local file/dir used as a template,
+		// refilled with external item's attributes extracted from $info[].
+		$s = ($is_file) ? stat (__FILE__) : stat (__DIR__);
 		$s[7] = $s['size'] = $info['size'];
 		$s[8] = $s[9] = $s[10] = $s['atime'] = $s['mtime'] = $s['ctime'] = $info['time'];
 		return $__smb_cache['stat'][$url] = $s;
@@ -443,7 +446,7 @@ class smb_stream_wrapper extends smb {
 			case 'r+':
 			case 'rb':
 			case 'a':
-			case 'a+':  $this->tmpfile = tempnam('/tmp', 'smb.down.');
+			case 'a+':  $this->tmpfile = tempnam($__tmp_dir, 'smb.down.');
 				smb::execute ('get "'.$pu['path'].'" "'.$this->tmpfile.'"', $pu);
 				break;
 			case 'w':
@@ -451,7 +454,7 @@ class smb_stream_wrapper extends smb {
 			case 'wb':
 			case 'x':
 			case 'x+':  $this->cleardircache();
-				$this->tmpfile = tempnam('/tmp', 'smb.up.');
+				$this->tmpfile = tempnam($__tmp_dir, 'smb.up.');
 				$this->need_flush=true;
 		}
 		$this->stream = fopen ($this->tmpfile, $mode);
