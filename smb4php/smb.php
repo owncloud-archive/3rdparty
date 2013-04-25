@@ -303,7 +303,7 @@ class smb {
 		if ($pu['type'] <> 'path') trigger_error('unlink(): error in URL', E_USER_ERROR);
 		smb::clearstatcache ($url);
 		smb_stream_wrapper::cleardircache (dirname($url));
-		return smb::execute ('del "'.$pu['path'].'"', $pu);
+		return smb::execute ('del "'.$pu['path'].'"', $pu)!==false;
 	}
 
 	function rename ($url_from, $url_to) {
@@ -319,7 +319,7 @@ class smb {
 			trigger_error('rename(): error in URL', E_USER_ERROR);
 		}
 		smb::clearstatcache ($url_from);
-		return smb::execute ('rename "'.$from['path'].'" "'.$to['path'].'"', $to);
+		return smb::execute ('rename "'.$from['path'].'" "'.$to['path'].'"', $to)!==false;
 	}
 
 	function mkdir ($url, $mode, $options) {
