@@ -24,10 +24,71 @@
 define ('SMB4PHP_VERSION', '0.8');
 
 ###################################################################
-# CONFIGURATION SECTION - Change for your needs
+# AUTO-CONFIGURATION SECTION
+#
+# An external application may configure this wrapper and may define
+# parameters for remote storages (hosts) by setting values of
+# $_SESSION['SMB4PHP'][$host][$attribute] array, where:
+#
+# $host 	is a fully qualified hostname or 'localhost'
+#		where $attribute is effective;
+#
+# $attribute	is a parameter for $host as follows:
+#
+# 'lang'	language for smbclient when contacts $host
+#		defaults to LANG of _this_ machine or 'en_US.UTF-8'
+#		if is empty, will be set by get_remote() at first 
+#		access to $host
+#
+# 'timezone'	$host local time offset to GMT (mtime correction)
+#		defaults to 'net time zone' of $host
+#		if is empty, will be set by get_remote() at first
+#		access to $host
+#
+# 'smbclient'	pathname to binary (valid for 'localhost' only!)
+#		defaults to 'which smbclient' output
+#		if is empty, will be set below at include
+#
+# 'net'		pathname to binary (valid for 'localhost' only!)
+#		defaults to 'which net' output at require_once
+#		if is empty, will be set below at include
+#
+# Within this script all above will be autoconfigured only once for
+# a session. In most of the cases defaults are OK and SMB4PHP does
+# not require any configuration.
+#
 ###################################################################
 
-define ('SMB4PHP_SMBCLIENT', 'smbclient');
+// Locate smbclient binary executable but only once by session.
+// If were not set by application, examine environment via shell execution.
+if (empty($_SESSION['SMB4PHP']['localhost']['smbclient'])) {
+	if (function_exists('exec') &&
+	    !in_array('exec', array_map('trim',explode(', ', ini_get('disable_functions')))) &&
+	    strtolower( ini_get( 'safe_mode' ) ) != 'on' ) {
+		// Search smbclient via which command call.
+		$cmd = exec('which smbclient');
+	}
+	// On failure set a reasonable default.
+	if (empty($cmd)) $cmd = '/usr/bin/smbclient';
+	$_SESSION['SMB4PHP']['localhost']['smbclient'] = $cmd;
+}
+
+// Locate net binary executable but only once by session.
+// If were not set by application, examine environment via shell execution.
+if (empty($_SESSION['SMB4PHP']['localhost']['net'])) {
+	if (function_exists('exec') &&
+	    !in_array('exec', array_map('trim',explode(', ', ini_get('disable_functions')))) &&
+	    strtolower( ini_get( 'safe_mode' ) ) != 'on' ) {
+		// Search net via which command call.
+		$cmd = exec('which net');
+	}
+	// On failure set a reasonable default.
+	if (empty($cmd)) $cmd = '/usr/bin/net';
+	 $_SESSION['SMB4PHP']['localhost']['net']= $cmd;
+}
+
+define ('SMB4PHP_SMBCLIENT', $_SESSION['SMB4PHP']['localhost']['smbclient']);
+define ('SMB4PHP_SMBNETTZ',  $_SESSION['SMB4PHP']['localhost']['net'].' time zone -S ');
 define ('SMB4PHP_SMBOPTIONS', 'TCP_NODELAY IPTOS_LOWDELAY SO_KEEPALIVE SO_RCVBUF=8192 SO_SNDBUF=8192');
 define ('SMB4PHP_AUTHMODE', 'arg'); # set to 'env' to use USER enviroment variable
 
@@ -65,6 +126,59 @@ class smb {
 		return $pu;
 	}
 
+	/**
+	 * Gets or guesses various attributes of a remote storage.
+	 * Results will be cached in $_SESSION to avoid expensive remote procedure calls.
+	 *
+	 * @param string $host		fully qualified hostname of remote storage
+	 * @param string $attrib 	valid attributes are: lang, timezone
+	 * @return string attribute 	value of attribute or empty string
+	 */
+	function get_remote ($host, $attrib) {
+		if (empty($host) || empty($attrib)) return;
+		// Answer from $_SESSION if value is known.
+		if (empty($_SESSION['SMB4PHP'][$host][$attrib])) {
+			// Ask value from remote host but only once by session.
+			switch ($attrib) {
+				// Remote time zone shift value (+/-HHMM to GMT).
+				case "timezone":
+					$cmd=SMB4PHP_SMBNETTZ.$host;
+					$output = popen ($cmd, 'r');
+					$result = fgets ($output, 4096);
+					pclose($output);
+					// Validating result.
+					if (preg_match('/^\+[0-9]{3}/',$result)) {
+						$_SESSION['SMB4PHP'][$host][$attrib]=substr($result,0,5);
+					}
+				break;
+				// Remote language (locale).
+				case "lang":
+					/* Sorry, I don't know how to get Samba 'unix charset' from a remote server.
+					   My best is to get locale from this machine and use it. */
+					$lang = getenv("LANG");
+					// We don't trust in answer 'C' here.
+					if (empty($lang) || $lang == 'C') {
+						$lang = '';
+						// Some tricks here using exec (if enabled). TODO: to complete!
+						if (function_exists('exec') &&
+						    !in_array('exec', array_map('trim',explode(', ', ini_get('disable_functions')))) &&
+						    strtolower( ini_get( 'safe_mode' ) ) != 'on' ) {
+							// Parse from Debian-style system locale (Wheezy).
+							$lang = exec('cat /etc/default/locale | grep "LANG"');
+							$lang = preg_replace('/^([^"]*)\"([^"]*)\"([^"]*)$/','${2}',$lang);
+						}
+					}
+					// Give up with a reasonable default.
+					if (empty($lang)) $lang = 'en_US.UTF-8';
+					$_SESSION['SMB4PHP'][$host][$attrib]=$lang;
+				break;
+				// Unknown attribute asked.
+				default:
+				    return;
+			}
+		}
+		return $_SESSION['SMB4PHP'][$host][$attrib];
+	}
 
 	function look ($purl) {
 		return smb::client ('-L ' . escapeshellarg ($purl['host']), $purl);
@@ -123,7 +237,7 @@ class smb {
 		}
 		$port = ($purl['port'] <> 139 ? ' -p ' . escapeshellarg ($purl['port']) : '');
 		$options = '-O ' . escapeshellarg(SMB4PHP_SMBOPTIONS);
-		$cmd="LANG=\"".'en_US.UTF-8'."\" ".SMB4PHP_SMBCLIENT." -s /dev/null -N {$auth} {$options} {$port} {$params} 2>/dev/null"."\n";
+		$cmd="LANG=\"".$this->get_remote($purl["host"],'lang')."\" ".SMB4PHP_SMBCLIENT." -s /dev/null -N {$auth} {$options} {$port} {$params} 2>/dev/null"."\n";
 		$output = popen ($cmd, 'r');
 		$info = array ();
 		$info['info']= array ();
@@ -168,8 +282,7 @@ class smb {
 							(strpos($attr,'D') === FALSE) ? 'file' : 'folder',
 							'attr' => $attr,
 							'size' => intval($regs[2]),
-							'time' => mktime ($his[0], $his[1], $his[2], $im, $regs[5], $regs[7])
-						)
+							'time' => strtotime($regs[7]."-".$im."-".$regs[5]." ".$his[0].":".$his[1].":".$his[2]." ".$this->get_remote($purl["host"],'timezone'))						)
 						: array();
 					break;
 				// Known SMB error messages (TODO: specific error handling).
