@@ -329,6 +329,7 @@ class smb {
 	# stats
 
 	function url_stat ($url, $flags = STREAM_URL_STAT_LINK) {
+		global $__tmp_dir;
 		if ($s = smb::getstatcache($url)) {
 			return $s;
 		}
@@ -538,6 +539,7 @@ class smb_stream_wrapper extends smb {
 	# streams
 
 	function stream_open ($url, $mode, $options, $opened_path) {
+		global $__tmp_dir;
 		$this->url = $url;
 		$this->mode = $mode;
 		$this->parsed_url = $pu = smb::parse_url($url);
