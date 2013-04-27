@@ -21,7 +21,9 @@
 #
 ###################################################################
 
-define ('SMB4PHP_VERSION', '0.8');
+# Verison-subversion (X.Y.z) for original source,
+# sub-subversion (x.y.Z) for our modifications.
+define ('SMB4PHP_VERSION', '0.8.1');
 
 ###################################################################
 # AUTO-CONFIGURATION SECTION
