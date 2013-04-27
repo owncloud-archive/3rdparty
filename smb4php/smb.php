@@ -345,12 +345,14 @@ class smb {
 				if ($o = smb::look ($pu)) {
 					$found = FALSE;
 					$lshare = strtolower ($pu['share']);  # fix by Eric Leung
-					foreach ($o['disk'] as $s) if ($lshare == strtolower($s)) {
-						$found = TRUE;
-						$stat = stat ($__tmp_dir);
-						break;
+					if (isset($o['disk'])) {
+						foreach ($o['disk'] as $s) if ($lshare == strtolower($s)) {
+							$found = TRUE;
+							$stat = stat ($__tmp_dir);
+							break;
+						}
 					}
-					if (! $found)
+					if (! $found && isset($share))
 						trigger_error ("url_stat(): disk resource '{$lshare}' not found in '{$pu['host']}'", E_USER_WARNING);
 				}
 				break;
