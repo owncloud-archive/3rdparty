@@ -71,7 +71,7 @@ if (empty($_SESSION['SMB4PHP']['localhost']['smbclient'])) {
 		$cmd = exec('which smbclient');
 	}
 	// On failure set a reasonable default.
-	if (empty($cmd)) $cmd = '/usr/bin/smbclient';
+	if (empty($cmd)) $cmd = 'smbclient';
 	$_SESSION['SMB4PHP']['localhost']['smbclient'] = $cmd;
 }
 
@@ -85,7 +85,7 @@ if (empty($_SESSION['SMB4PHP']['localhost']['net'])) {
 		$cmd = exec('which net');
 	}
 	// On failure set a reasonable default.
-	if (empty($cmd)) $cmd = '/usr/bin/net';
+	if (empty($cmd)) $cmd = 'net';
 	 $_SESSION['SMB4PHP']['localhost']['net']= $cmd;
 }
 
