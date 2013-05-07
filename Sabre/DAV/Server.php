@@ -219,7 +219,7 @@ class Sabre_DAV_Server {
             } catch (Exception $ignore) {
             }
             $DOM = new DOMDocument('1.0','utf-8');
-            $DOM->formatOutput = true;
+            //$dom->formatOutput = true; // pretty printing breaks csync, because it expects to have no whitespace FIXME.
 
             $error = $DOM->createElementNS('DAV:','d:error');
             $error->setAttribute('xmlns:s',self::NS_SABREDAV);
@@ -714,8 +714,6 @@ class Sabre_DAV_Server {
         $requestedProperties = $this->parsePropFindRequest($this->httpRequest->getBody(true));
 
         $depth = $this->getHTTPDepth(1);
-        // The only two options for the depth of a propfind is 0 or 1
-        if ($depth!=0) $depth = 1;
 
         $newProperties = $this->getPropertiesForPath($uri,$requestedProperties,$depth);
 
@@ -1439,6 +1437,17 @@ class Sabre_DAV_Server {
     }
 
     /**
+     * Small helper to support PROPFIND with DEPTH_INFINITY.
+     */
+    private function addPathNodesRecursively(&$nodes, $path) {
+        foreach($this->tree->getChildren($path) as $childNode) {
+            $nodes[$path . '/' . $childNode->getName()] = $childNode;
+            if ($childNode instanceof Sabre_DAV_ICollection)
+                $this->addPathNodesRecursively($nodes, $path . '/' . $childNode->getName());
+        }
+    }
+
+    /**
      * Returns a list of properties for a given path
      *
      * The path that should be supplied should have the baseUrl stripped out
@@ -1453,9 +1462,6 @@ class Sabre_DAV_Server {
      * @return array
      */
     public function getPropertiesForPath($path, $propertyNames = array(), $depth = 0) {
-
-        if ($depth!=0) $depth = 1;
-
         $path = rtrim($path,'/');
 
         $returnPropertyList = array();
@@ -1467,6 +1473,8 @@ class Sabre_DAV_Server {
         if ($depth==1 && $parentNode instanceof Sabre_DAV_ICollection) {
             foreach($this->tree->getChildren($path) as $childNode)
                 $nodes[$path . '/' . $childNode->getName()] = $childNode;
+        } else if ($depth ==  self::DEPTH_INFINITY && $parentNode instanceof Sabre_DAV_ICollection) {
+            $this->addPathNodesRecursively($nodes, $path);
         }
 
         // If the propertyNames array is empty, it means all properties are requested.
@@ -2067,7 +2075,7 @@ class Sabre_DAV_Server {
     public function generateMultiStatus(array $fileProperties, $strip404s = false) {
 
         $dom = new DOMDocument('1.0','utf-8');
-        //$dom->formatOutput = true;
+        //$dom->formatOutput = true; // pretty printing breaks csync, because it expects to have no whitespace FIXME.
         $multiStatus = $dom->createElement('d:multistatus');
         $dom->appendChild($multiStatus);
 
