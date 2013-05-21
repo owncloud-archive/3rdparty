@@ -115,7 +115,6 @@ class ZipStreamer {
    */
   public function addFileFromStream($stream, $filePath, $timestamp = 0,
                   $fileComment = null, $compress = false) {
-    OC_Log::write('ZipStreamer', 'addFileFromStream', OC_Log::DEBUG);
     if ($this->isFinalized) {
       return false;
     }
@@ -133,17 +132,13 @@ class ZipStreamer {
       $gzMethod = GZMETHOD::STORE;
     }
 
-    OC_Log::write('ZipStreamer', 'beginFile', OC_Log::DEBUG);
     list ($gpFlags, $lfhLength) = $this->beginFile($filePath, $fileComment, $timestamp, $gpFlags, $gzMethod);
 
-    OC_Log::write('ZipStreamer', 'streamFileData', OC_Log::DEBUG);
     list ($dataLength, $gzLength, $dataCRC32) = $this->streamFileData($stream, $compress);
 
-    #OC_Log::write('ZipStreamer', 'addDataDescriptor', OC_Log::DEBUG);
     #$this->addDataDescriptor($dataLength, $gzLength, $dataCRC32);
 
     // build cdRec
-    OC_Log::write('ZipStreamer', 'buildCentralDirectoryHeader', OC_Log::DEBUG);
     $this->cdRec[] = $this->buildCentralDirectoryHeader($filePath, $timestamp, $gpFlags, $gzMethod, $dataLength, $gzLength, $dataCRC32, self::EXT_FILE_ATTR_FILE, $this->offset);
 
     // calc offset
@@ -171,11 +166,9 @@ class ZipStreamer {
       $gpFlags = 0x0000; // Compression type 0 = stored
       $gzMethod = GZMETHOD::STORE; // Compression type 0 = stored
 
-      OC_Log::write('ZipStreamer', 'beginFile', OC_Log::DEBUG);
       list ($gpFlags, $lfhLength) = $this->beginFile($directoryPath, $fileComment, $timestamp, $gpFlags, $gzMethod);
 
       // build cdRec
-      OC_Log::write('ZipStreamer', 'buildCentralDirectoryHeader', OC_Log::DEBUG);
       $this->cdRec[] = $this->buildCentralDirectoryHeader($directoryPath, $timestamp, $gpFlags, $gzMethod, 0, 0, 0, self::EXT_FILE_ATTR_DIR, $this->offset);
 
       return true;
@@ -197,7 +190,6 @@ class ZipStreamer {
   		echo $cd;
 
   		// print end of central directory record
-  		OC_Log::write('ZipStreamer', 'buildEndOfCentralDirectoryRecord', OC_Log::DEBUG);
   		echo $this->buildEndOfCentralDirectoryRecord(strlen($cd));
 
   		flush();
@@ -219,7 +211,6 @@ class ZipStreamer {
     if ($isFileUTF8 || $isCommentUTF8) {
       $gpFlags |= GPFLAGS::EFS;
     }
-    OC_Log::write('ZipStreamer', 'buildLocalFileHeader', OC_Log::DEBUG);
     $localFileHeader = $this->buildLocalFileHeader($filePath, $timestamp, $gpFlags, $gzMethod, $dataLength, $gzLength, $dataCRC32);
     echo $localFileHeader;
 
@@ -242,7 +233,6 @@ class ZipStreamer {
       $gzLength += strlen($data);
       echo $data;
 
-      OC_Log::write('ZipStreamer', 'streamed '.$dataLength.' bytes of data', OC_Log::DEBUG);
       flush();
     }
     return array ($dataLength, $gzLength, unpack('N', hash_final($hashCtx, true))[1]);
