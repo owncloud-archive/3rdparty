@@ -210,7 +210,7 @@ class MDB2_Driver_Manager_oci8 extends MDB2_Driver_Manager_Common
         $db->setOption('idxname_format', $idxname_format);
         if (PEAR::isError($result)) {
             return $db->raiseError($result, null, null,
-                'primary key for autoincrement PK could not be created', __FUNCTION__);
+                'primary key "'.$index_name.'" for autoincrement PK could not be created', __FUNCTION__);
         }
 
         if (null === $start) {
@@ -282,7 +282,7 @@ END;
             return $db;
         }
 
-        $table = strtoupper($table);
+        $table_uppercase = strtoupper($table);
         $trigger_name = $table . '_AI_PK';
         $trigger_name_quoted = $db->quote($trigger_name, 'text');
         $query = 'SELECT trigger_name FROM user_triggers';
@@ -293,7 +293,7 @@ END;
         }
 
         if ($trigger) {
-            $trigger_name  = $db->quoteIdentifier($table . '_AI_PK', true);
+            $trigger_name  = $db->quoteIdentifier($trigger, true);
             $trigger_sql = 'DROP TRIGGER ' . $trigger_name;
             $result = $db->exec($trigger_sql);
             if (PEAR::isError($result)) {
@@ -307,7 +307,7 @@ END;
                     'sequence for autoincrement PK could not be dropped', __FUNCTION__);
             }
 
-            $index_name = $table . '_AI_PK';
+            $index_name = $table_uppercase . '_AI_PK';
             $idxname_format = $db->getOption('idxname_format');
             $db->setOption('idxname_format', '%s');
             $result1 = $this->dropConstraint($table, $index_name);
@@ -315,7 +315,7 @@ END;
             $result2 = $this->dropConstraint($table, $index_name);
             if (PEAR::isError($result1) && PEAR::isError($result2)) {
                 return $db->raiseError($result1, null, null,
-                    'primary key for autoincrement PK could not be dropped', __FUNCTION__);
+                    'primary key "'.$index_name.'" for autoincrement PK could not be dropped', __FUNCTION__);
             }
         }
 
@@ -631,6 +631,15 @@ END;
                 //fix error "column to be modified to NOT NULL is already NOT NULL" 
                 if (!array_key_exists('notnull', $field)) {
                     unset($field['definition']['notnull']);
+                }
+                if (array_key_exists('notnull', $field)
+                    && $field['notnull']
+                    && array_key_exists('notnull', $field['definition'])
+                    && $field['definition']['notnull']
+                ) {
+                    //ignore not null constraint to fix "column to be modified to NOT NULL is already NOT NULL" 
+                    unset($field['definition']['notnull']);
+                    unset($field['notnull']);
                 }
                 $fields[] = $db->getDeclaration($field['definition']['type'], $field_name, $field['definition']);
             }
