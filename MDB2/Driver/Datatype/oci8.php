@@ -171,6 +171,26 @@ class MDB2_Driver_Datatype_oci8 extends MDB2_Driver_Datatype_Common
     }
 
     // }}}
+    // {{{ _compareCLOBDefinition()
+
+    /**
+     * Obtain an array of changes that may need to applied to an CLOB field
+     *
+     * @param array $current new definition
+     * @param array  $previous old definition
+     * @return array  containing all changes that will need to be applied
+     * @access protected
+     */
+    function _compareCLOBDefinition($current, $previous)
+    {
+		//CLOB definitions only vary in Name, Type and Null, but this is all
+		//dealt with somewhere else
+		//Originally, Common.php would call compareTextDefinition which would
+		//check for Length (and Fixed) which will break Oracle upgrade.
+        return array();
+    }
+
+    // }}}
     // {{{ _quoteCLOB()
 
     /**
