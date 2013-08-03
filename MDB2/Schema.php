@@ -424,11 +424,11 @@ class MDB2_Schema extends PEAR
      * This method can be used if no xml schema file exists yet.
      * The resulting xml schema file may need some manual adjustments.
      *
-     * @param string|null $prefix if not null, only tables with this prefix will be included
+     * @param string $prefix if not empty, only tables with this prefix will be included
      * @return array|MDB2_Error array with definition or error object
      * @access public
      */
-    function getDefinitionFromDatabase($prefix = null)
+    function getDefinitionFromDatabase($prefix = '')
     {
         $database = $this->db->database_name;
         if (empty($database)) {
@@ -472,8 +472,8 @@ class MDB2_Schema extends PEAR
         }
 
         foreach ($tables as $table_name) {
-            $isPrefixMatched = strlen($prefix) && substr($table_name, 0, strlen($prefix)) === $prefix;
-            if (!$isPrefixMatched) {
+            $skipTable = strlen($prefix) && substr($table_name, 0, strlen($prefix)) !== $prefix;
+            if ($skipTable) {
                 continue;
             }
 
