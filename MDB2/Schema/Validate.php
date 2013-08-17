@@ -384,6 +384,7 @@ class MDB2_Schema_Validate
             }
         }
         if (isset($field['default'])
+            && $field['notnull']
             && PEAR::isError($result = $this->validateDataFieldValue($field, $field['default'], $field_name))
         ) {
             return $this->raiseError(MDB2_SCHEMA_ERROR_VALIDATE,
