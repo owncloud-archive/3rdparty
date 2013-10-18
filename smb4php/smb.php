@@ -23,7 +23,7 @@
 
 # Verison-subversion (X.Y.z) for original source,
 # sub-subversion (x.y.Z) for our modifications.
-define ('SMB4PHP_VERSION', '0.8.1');
+define ('SMB4PHP_VERSION', '0.8.2');
 
 ###################################################################
 # AUTO-CONFIGURATION SECTION
@@ -215,7 +215,7 @@ class smb {
 			'^(.*): ERRSRV - ERRbadpw' => 'error',
 			'^Error returning browse list: (.*)$' => 'error',
 			'^tree connect failed: (.*)$' => 'error',
-			'^(Connection to .* failed)$' => 'error',
+			'^(Connection to .* failed)(.*)$' => 'error-connect',
 			'^NT_STATUS_(.*) ' => 'error',
 			'^NT_STATUS_(.*)\$' => 'error',
 			'ERRDOS - ERRbadpath \((.*).\)' => 'error',
@@ -310,6 +310,10 @@ class smb {
 					// Emergency exit - on error giving up by default.
 					return false;
 					break;
+				case 'error-connect':
+					trigger_error("Not connected: ".' params('.$params.')', E_USER_ERROR);
+					return false;
+					break;
 				// Failure with no $tag identified.
 				default:
 					trigger_error("No tag: ".' params('.$params.')', E_USER_ERROR);
@@ -335,7 +339,7 @@ class smb {
 		if ($s = smb::getstatcache($url)) {
 			return $s;
 		}
-		list ($stat, $pu) = array (array (), smb::parse_url ($url));
+		list ($stat, $pu) = array (false, smb::parse_url ($url));
 		switch ($pu['type']) {
 			case 'host':
 				if ($o = smb::look ($pu))
