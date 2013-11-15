@@ -457,8 +457,9 @@ class smb_stream_wrapper extends smb {
 	function stream_eof () { return feof($this->stream); }
 
 	function stream_tell () { return ftell($this->stream); }
-
-	function stream_seek ($offset, $whence=null) { return fseek($this->stream, $offset, $whence); }
+	
+	// PATCH: the wrapper must return true when fseek succeeded by returning 0.
+	function stream_seek ($offset, $whence=null) { return fseek($this->stream, $offset, $whence) === 0; }
 
 	function stream_flush () {
 		if ($this->mode <> 'r' && $this->need_flush) {
