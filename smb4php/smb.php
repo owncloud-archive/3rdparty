@@ -21,13 +21,76 @@
 #
 ###################################################################
 
-define ('SMB4PHP_VERSION', '0.8');
+# Verison-subversion (X.Y.z) for original source,
+# sub-subversion (x.y.Z) for our modifications.
+define ('SMB4PHP_VERSION', '0.8.2');
 
 ###################################################################
-# CONFIGURATION SECTION - Change for your needs
+# AUTO-CONFIGURATION SECTION
+#
+# An external application may configure this wrapper and may define
+# parameters for remote storages (hosts) by setting values of
+# $_SESSION['SMB4PHP'][$host][$attribute] array, where:
+#
+# $host 	is a fully qualified hostname or 'localhost'
+#		where $attribute is effective;
+#
+# $attribute	is a parameter for $host as follows:
+#
+# 'lang'	language for smbclient when contacts $host
+#		defaults to LANG of _this_ machine or 'en_US.UTF-8'
+#		if is empty, will be set by get_remote() at first 
+#		access to $host
+#
+# 'timezone'	$host local time offset to GMT (mtime correction)
+#		defaults to 'net time zone' of $host
+#		if is empty, will be set by get_remote() at first
+#		access to $host
+#
+# 'smbclient'	pathname to binary (valid for 'localhost' only!)
+#		defaults to 'which smbclient' output
+#		if is empty, will be set below at include
+#
+# 'net'		pathname to binary (valid for 'localhost' only!)
+#		defaults to 'which net' output at require_once
+#		if is empty, will be set below at include
+#
+# Within this script all above will be autoconfigured only once for
+# a session. In most of the cases defaults are OK and SMB4PHP does
+# not require any configuration.
+#
 ###################################################################
 
-define ('SMB4PHP_SMBCLIENT', 'smbclient');
+// Locate smbclient binary executable but only once by session.
+// If were not set by application, examine environment via shell execution.
+if (empty($_SESSION['SMB4PHP']['localhost']['smbclient'])) {
+	if (function_exists('exec') &&
+	    !in_array('exec', array_map('trim',explode(', ', ini_get('disable_functions')))) &&
+	    strtolower( ini_get( 'safe_mode' ) ) != 'on' ) {
+		// Search smbclient via which command call.
+		$cmd = exec('which smbclient');
+	}
+	// On failure set a reasonable default.
+	if (empty($cmd)) $cmd = 'smbclient';
+	$_SESSION['SMB4PHP']['localhost']['smbclient'] = $cmd;
+}
+
+// Locate net binary executable but only once by session.
+// If were not set by application, examine environment via shell execution.
+if (empty($_SESSION['SMB4PHP']['localhost']['net'])) {
+	if (function_exists('exec') &&
+	    !in_array('exec', array_map('trim',explode(', ', ini_get('disable_functions')))) &&
+	    strtolower( ini_get( 'safe_mode' ) ) != 'on' ) {
+		// Search net via which command call.
+		$cmd = exec('which net');
+	}
+	// On failure set a reasonable default.
+	if (empty($cmd)) $cmd = 'net';
+	 $_SESSION['SMB4PHP']['localhost']['net']= $cmd;
+}
+
+define ('SMB4PHP_SMBCLIENT', $_SESSION['SMB4PHP']['localhost']['smbclient']);
+define ('SMB4PHP_SMBNETTZ',  $_SESSION['SMB4PHP']['localhost']['net'].' time zone -S ');
 define ('SMB4PHP_SMBOPTIONS', 'TCP_NODELAY IPTOS_LOWDELAY SO_KEEPALIVE SO_RCVBUF=8192 SO_SNDBUF=8192');
 define ('SMB4PHP_AUTHMODE', 'arg'); # set to 'env' to use USER enviroment variable
 
@@ -36,6 +99,7 @@ define ('SMB4PHP_AUTHMODE', 'arg'); # set to 'env' to use USER enviroment variab
 ###################################################################
 
 $GLOBALS['__smb_cache'] = array ('stat' => array (), 'dir' => array ());
+$GLOBALS['__tmp_dir'] = ini_get('upload_tmp_dir') ? ini_get('upload_tmp_dir') : sys_get_temp_dir();
 
 class smb {
 
@@ -64,6 +128,59 @@ class smb {
 		return $pu;
 	}
 
+	/**
+	 * Gets or guesses various attributes of a remote storage.
+	 * Results will be cached in $_SESSION to avoid expensive remote procedure calls.
+	 *
+	 * @param string $host		fully qualified hostname of remote storage
+	 * @param string $attrib 	valid attributes are: lang, timezone
+	 * @return string attribute 	value of attribute or empty string
+	 */
+	function get_remote ($host, $attrib) {
+		if (empty($host) || empty($attrib)) return;
+		// Answer from $_SESSION if value is known.
+		if (empty($_SESSION['SMB4PHP'][$host][$attrib])) {
+			// Ask value from remote host but only once by session.
+			switch ($attrib) {
+				// Remote time zone shift value (+/-HHMM to GMT).
+				case "timezone":
+					$cmd=SMB4PHP_SMBNETTZ.$host;
+					$output = popen ($cmd, 'r');
+					$result = fgets ($output, 4096);
+					pclose($output);
+					// Validating result.
+					if (preg_match('/^\+[0-9]{3}/',$result)) {
+						$_SESSION['SMB4PHP'][$host][$attrib]=substr($result,0,5);
+					}
+				break;
+				// Remote language (locale).
+				case "lang":
+					/* Sorry, I don't know how to get Samba 'unix charset' from a remote server.
+					   My best is to get locale from this machine and use it. */
+					$lang = getenv("LANG");
+					// We don't trust in answer 'C' here.
+					if (empty($lang) || $lang == 'C') {
+						$lang = '';
+						// Some tricks here using exec (if enabled). TODO: to complete!
+						if (function_exists('exec') &&
+						    !in_array('exec', array_map('trim',explode(', ', ini_get('disable_functions')))) &&
+						    strtolower( ini_get( 'safe_mode' ) ) != 'on' ) {
+							// Parse from Debian-style system locale (Wheezy).
+							$lang = exec('cat /etc/default/locale | grep "LANG"');
+							$lang = preg_replace('/^([^"]*)\"([^"]*)\"([^"]*)$/','${2}',$lang);
+						}
+					}
+					// Give up with a reasonable default.
+					if (empty($lang)) $lang = 'en_US.UTF-8';
+					$_SESSION['SMB4PHP'][$host][$attrib]=$lang;
+				break;
+				// Unknown attribute asked.
+				default:
+				    return;
+			}
+		}
+		return $_SESSION['SMB4PHP'][$host][$attrib];
+	}
 
 	function look ($purl) {
 		return smb::client ('-L ' . escapeshellarg ($purl['host']), $purl);
@@ -122,11 +239,8 @@ class smb {
 		}
 		$port = ($purl['port'] <> 139 ? ' -p ' . escapeshellarg ($purl['port']) : '');
 		$options = '-O ' . escapeshellarg(SMB4PHP_SMBOPTIONS);
-
-		// this put env is necessary to read the output of smbclient correctly
-		$old_locale = getenv('LC_ALL');
-		putenv('LC_ALL=en_US.UTF-8');
-		$output = popen (SMB4PHP_SMBCLIENT." -N {$auth} {$options} {$port} {$options} {$params} 2>/dev/null", 'r');
+		$cmd="LANG=\"".$this->get_remote($purl["host"],'lang')."\" ".SMB4PHP_SMBCLIENT." -s /dev/null -N {$auth} {$options} {$port} {$params} 2>/dev/null"."\n";
+		$output = popen ($cmd, 'r');
 		$info = array ();
 		$info['info']= array ();
 		$mode = '';
@@ -170,10 +284,10 @@ class smb {
 							(strpos($attr,'D') === FALSE) ? 'file' : 'folder',
 							'attr' => $attr,
 							'size' => intval($regs[2]),
-							'time' => mktime ($his[0], $his[1], $his[2], $im, $regs[5], $regs[7])
-						)
+							'time' => strtotime($regs[7]."-".$im."-".$regs[5]." ".$his[0].":".$his[1].":".$his[2]." ".$this->get_remote($purl["host"],'timezone'))						)
 						: array();
 					break;
+				// Known SMB error messages (TODO: specific error handling).
 				case 'error':
 					if(substr($regs[0],0,22)=='NT_STATUS_NO_SUCH_FILE'){
 						return false;
@@ -183,9 +297,26 @@ class smb {
 						return false;
 					}elseif(substr($regs[0],0,29)=='NT_STATUS_FILE_IS_A_DIRECTORY'){
 						return false;
+					}elseif(substr($regs[0],0,31)=='NT_STATUS_OBJECT_NAME_NOT_FOUND'){
+						return false;
+					}elseif(substr($regs[0],0,23)=='NT_STATUS_ACCESS_DENIED'){
+						return false;
+					}elseif(substr($regs[0],0,31)=='NT_STATUS_MEDIA_WRITE_PROTECTED'){
+						return false;
+					}else{ // Unknown SMB error message logged.
+						trigger_error($regs[0].' params('.$params.')', E_USER_ERROR);
+						return false;
 					}
-					trigger_error($regs[0].' params('.$params.')', E_USER_ERROR);
+					// Emergency exit - on error giving up by default.
+					return false;
+					break;
 				case 'error-connect':
+					trigger_error("Not connected: ".' params('.$params.')', E_USER_ERROR);
+					return false;
+					break;
+				// Failure with no $tag identified.
+				default:
+					trigger_error("No tag: ".' params('.$params.')', E_USER_ERROR);
 					return false;
 			}
 			if ($i) switch ($i[1]) {
@@ -197,15 +328,6 @@ class smb {
 			}
 		}
 		pclose($output);
-
-
-		// restore previous locale
-		if ($old_locale===false) {
-			putenv('LC_ALL');
-		} else {
-			putenv('LC_ALL='.$old_locale);
-		}
-
 		return $info;
 	}
 
@@ -213,6 +335,7 @@ class smb {
 	# stats
 
 	function url_stat ($url, $flags = STREAM_URL_STAT_LINK) {
+		global $__tmp_dir;
 		if ($s = smb::getstatcache($url)) {
 			return $s;
 		}
@@ -220,7 +343,7 @@ class smb {
 		switch ($pu['type']) {
 			case 'host':
 				if ($o = smb::look ($pu))
-					$stat = stat ("/tmp");
+					$stat = stat ($__tmp_dir);
 				else
 					trigger_error ("url_stat(): list failed for host '{$pu['host']}'", E_USER_WARNING);
 				break;
@@ -228,12 +351,14 @@ class smb {
 				if ($o = smb::look ($pu)) {
 					$found = FALSE;
 					$lshare = strtolower ($pu['share']);  # fix by Eric Leung
-					foreach ($o['disk'] as $s) if ($lshare == strtolower($s)) {
-						$found = TRUE;
-						$stat = stat ("/tmp");
-						break;
+					if (isset($o['disk'])) {
+						foreach ($o['disk'] as $s) if ($lshare == strtolower($s)) {
+							$found = TRUE;
+							$stat = stat ($__tmp_dir);
+							break;
+						}
 					}
-					if (! $found)
+					if (! $found && isset($share))
 						trigger_error ("url_stat(): disk resource '{$lshare}' not found in '{$pu['host']}'", E_USER_WARNING);
 				}
 				break;
@@ -261,7 +386,9 @@ class smb {
 		$url = rtrim($url, '/');
 		global $__smb_cache;
 		$is_file = (strpos ($info['attr'],'D') === FALSE);
-		$s = ($is_file) ? stat ('/etc/passwd') : stat ('/tmp');
+		// Stat results of an existing local file/dir used as a template,
+		// refilled with external item's attributes extracted from $info[].
+		$s = ($is_file) ? stat (__FILE__) : stat (__DIR__);
 		$s[7] = $s['size'] = $info['size'];
 		$s[8] = $s[9] = $s[10] = $s['atime'] = $s['mtime'] = $s['ctime'] = $info['time'];
 		return $__smb_cache['stat'][$url] = $s;
@@ -289,7 +416,7 @@ class smb {
 		if ($pu['type'] <> 'path') trigger_error('unlink(): error in URL', E_USER_ERROR);
 		smb::clearstatcache ($url);
 		smb_stream_wrapper::cleardircache (dirname($url));
-		return smb::execute ('del "'.$pu['path'].'"', $pu);
+		return smb::execute ('del "'.$pu['path'].'"', $pu)!==false;
 	}
 
 	function rename ($url_from, $url_to) {
@@ -305,7 +432,7 @@ class smb {
 			trigger_error('rename(): error in URL', E_USER_ERROR);
 		}
 		smb::clearstatcache ($url_from);
-		return smb::execute ('rename "'.$from['path'].'" "'.$to['path'].'"', $to);
+		return smb::execute ('rename "'.$from['path'].'" "'.$to['path'].'"', $to)!==false;
 	}
 
 	function mkdir ($url, $mode, $options) {
@@ -420,6 +547,7 @@ class smb_stream_wrapper extends smb {
 	# streams
 
 	function stream_open ($url, $mode, $options, $opened_path) {
+		global $__tmp_dir;
 		$this->url = $url;
 		$this->mode = $mode;
 		$this->parsed_url = $pu = smb::parse_url($url);
@@ -429,7 +557,7 @@ class smb_stream_wrapper extends smb {
 			case 'r+':
 			case 'rb':
 			case 'a':
-			case 'a+':  $this->tmpfile = tempnam('/tmp', 'smb.down.');
+			case 'a+':  $this->tmpfile = tempnam($__tmp_dir, 'smb.down.');
 				smb::execute ('get "'.$pu['path'].'" "'.$this->tmpfile.'"', $pu);
 				break;
 			case 'w':
@@ -437,7 +565,7 @@ class smb_stream_wrapper extends smb {
 			case 'wb':
 			case 'x':
 			case 'x+':  $this->cleardircache();
-				$this->tmpfile = tempnam('/tmp', 'smb.up.');
+				$this->tmpfile = tempnam($__tmp_dir, 'smb.up.');
 				$this->need_flush=true;
 		}
 		$this->stream = fopen ($this->tmpfile, $mode);
