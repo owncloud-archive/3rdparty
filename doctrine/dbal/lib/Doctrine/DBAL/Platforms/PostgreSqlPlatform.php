@@ -379,7 +379,8 @@ class PostgreSqlPlatform extends AbstractPlatform
             }
 
             if ($columnDiff->hasChanged('default')) {
-                $query = 'ALTER ' . $oldColumnName . ' SET ' . $this->getDefaultValueDeclarationSQL($column->toArray());
+                $defaultStatement = $this->getDefaultValueDeclarationSQL($column->toArray());
+                $query = 'ALTER ' . $oldColumnName . (empty(trim($defaultStatement)) ? ' DROP DEFAULT ' : ' SET ' . $defaultStatement);
                 $sql[] = 'ALTER TABLE ' . $diff->name . ' ' . $query;
             }
 
