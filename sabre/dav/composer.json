@@ -28,6 +28,7 @@
     },
     "require-dev" : {
         "phpunit/phpunit" : "3.7.*",
+        "evert/phpdoc-md" : "~0.0.7",
         "phing/phing" : "2.4.14"
     },
     "provide" : {
@@ -39,12 +40,21 @@
         "ext-pdo" : "*"
     },
     "autoload": {
-        "psr-0": { "Sabre": "lib/" }
+        "psr-0" : {
+            "Sabre\\DAV"     : "lib/",
+            "Sabre\\HTTP"    : "lib/",
+            "Sabre\\DAVACL"  : "lib/",
+            "Sabre\\CalDAV"  : "lib/",
+            "Sabre\\CardDAV" : "lib/"
+        }
     },
     "support" : {
         "forum" : "https://groups.google.com/group/sabredav-discuss",
         "source" : "https://github.com/evert/sabredav"
     },
+    "bin" : [
+        "bin/sabredav"
+    ],
     "config" : {
         "bin-dir" : "./bin"
     }

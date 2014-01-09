@@ -51,17 +51,17 @@
     },
     {
         "name": "sabre/dav",
-        "version": "1.7.9",
-        "version_normalized": "1.7.9.0",
+        "version": "1.8.7",
+        "version_normalized": "1.8.7.0",
         "source": {
             "type": "git",
             "url": "https://github.com/fruux/sabre-dav.git",
-            "reference": "05ee3831e48e908041888bfdf0186bce1b7097d8"
+            "reference": "41c750da3c60a427cdd847df090ef0fc7e8f1076"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/fruux/sabre-dav/zipball/05ee3831e48e908041888bfdf0186bce1b7097d8",
-            "reference": "05ee3831e48e908041888bfdf0186bce1b7097d8",
+            "url": "https://api.github.com/repos/fruux/sabre-dav/zipball/41c750da3c60a427cdd847df090ef0fc7e8f1076",
+            "reference": "41c750da3c60a427cdd847df090ef0fc7e8f1076",
             "shasum": ""
         },
         "require": {
@@ -81,6 +81,7 @@
             "evert/sabredav": "1.7.*"
         },
         "require-dev": {
+            "evert/phpdoc-md": "~0.0.7",
             "phing/phing": "2.4.14",
             "phpunit/phpunit": "3.7.*"
         },
@@ -89,12 +90,19 @@
             "ext-curl": "*",
             "ext-pdo": "*"
         },
-        "time": "2013-10-02 18:33:56",
+        "time": "2013-10-02 18:38:26",
+        "bin": [
+            "bin/sabredav"
+        ],
         "type": "library",
         "installation-source": "dist",
         "autoload": {
             "psr-0": {
-                "Sabre": "lib/"
+                "Sabre\\DAV": "lib/",
+                "Sabre\\HTTP": "lib/",
+                "Sabre\\DAVACL": "lib/",
+                "Sabre\\CalDAV": "lib/",
+                "Sabre\\CardDAV": "lib/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
