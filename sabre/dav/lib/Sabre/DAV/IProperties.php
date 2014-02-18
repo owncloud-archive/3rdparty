@@ -1,17 +1,17 @@
 <?php
 
+namespace Sabre\DAV;
+
 /**
  * IProperties interface
  *
  * Implement this interface to support custom WebDAV properties requested and sent from clients.
  *
- * @package Sabre
- * @subpackage DAV
  * @copyright Copyright (C) 2007-2013 fruux GmbH (https://fruux.com/).
  * @author Evert Pot (http://evertpot.com/)
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
  */
-interface Sabre_DAV_IProperties extends Sabre_DAV_INode {
+interface IProperties extends INode {
 
     /**
      * Updates properties on this node,

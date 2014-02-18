@@ -1,16 +1,18 @@
 <?php
 
+namespace Sabre\CalDAV;
+use Sabre\HTTP;
 use Sabre\VObject;
 
 /**
  * This unittest is created to check if a VALARM TRIGGER of PT0S is supported
  *
  *
- * @copyright Copyright (C) 2007-2013 fruux GmbH (https://fruux.com/).
- * @author Evert Pot (http://evertpot.com/)
+ * @copyright Copyright (C) 2007-2013 Rooftop Solutions. All rights reserved.
+ * @author Evert Pot (http://www.rooftopsolutions.nl/)
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
  */
-class Sabre_CalDAV_Issue205Test extends Sabre_DAVServerTest {
+class Issue205Test extends \Sabre\DAVServerTest {
 
     protected $setupCalDAV = true;
 
@@ -49,7 +51,7 @@ END:VCALENDAR
 
     function testIssue205() {
 
-        $request = new Sabre_HTTP_Request(array(
+        $request = new HTTP\Request(array(
             'REQUEST_METHOD' => 'REPORT',
             'HTTP_CONTENT_TYPE' => 'application/xml',
             'REQUEST_URI' => '/calendars/user1/calendar1',

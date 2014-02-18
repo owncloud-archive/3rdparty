@@ -1,5 +1,8 @@
 <?php
 
+namespace Sabre\CalDAV;
+
+use Sabre\HTTP;
 use Sabre\VObject;
 
 /**
@@ -8,11 +11,11 @@ use Sabre\VObject;
  * Hopefully, by the time I'm done with this, I've both found the problem, and
  * fixed it :)
  *
- * @copyright Copyright (C) 2007-2013 fruux GmbH (https://fruux.com/).
- * @author Evert Pot (http://evertpot.com/)
+ * @copyright Copyright (C) 2007-2013 Rooftop Solutions. All rights reserved.
+ * @author Evert Pot (http://www.rooftopsolutions.nl/)
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
  */
-class Sabre_CalDAV_ExpandEventsDoubleEventsTest extends Sabre_DAVServerTest {
+class ExpandEventsDoubleEventsTest extends \Sabre\DAVServerTest {
 
     protected $setupCalDAV = true;
 
@@ -53,7 +56,7 @@ END:VCALENDAR
 
     function testExpand() {
 
-        $request = new Sabre_HTTP_Request(array(
+        $request = new HTTP\Request(array(
             'REQUEST_METHOD' => 'REPORT',
             'HTTP_CONTENT_TYPE' => 'application/xml',
             'REQUEST_URI' => '/calendars/user1/calendar1',
