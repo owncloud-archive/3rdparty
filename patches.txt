@@ -1,0 +1,3 @@
+Patches:
+
+- some external entity patches from https://github.com/owncloud/3rdparty/pull/74 - they should get superseeded by updating the affected libraries.
