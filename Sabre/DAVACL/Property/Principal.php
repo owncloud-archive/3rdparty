@@ -8,8 +8,8 @@
  *
  * @package Sabre
  * @subpackage DAVACL
- * @copyright Copyright (C) 2007-2013 Rooftop Solutions. All rights reserved.
- * @author Evert Pot (http://www.rooftopsolutions.nl/)
+ * @copyright Copyright (C) 2007-2014 fruux GmbH (https://fruux.com/).
+ * @author Evert Pot (http://evertpot.com/)
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
  */
 class Sabre_DAVACL_Property_Principal extends Sabre_DAV_Property implements Sabre_DAV_Property_IHref {
@@ -119,7 +119,7 @@ class Sabre_DAVACL_Property_Principal extends Sabre_DAV_Property implements Sabr
                 break;
             case self::HREF :
                 $href = $node->ownerDocument->createElement($prefix . ':href');
-                $href->nodeValue = $server->getBaseUri() . $this->href;
+                $href->nodeValue = $server->getBaseUri() . Sabre_DAV_URLUtil::encodePath($this->href);
                 $node->appendChild($href);
                 break;
 

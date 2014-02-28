@@ -12,8 +12,8 @@
  *
  * @package Sabre
  * @subpackage DAVACL
- * @copyright Copyright (C) 2007-2013 Rooftop Solutions. All rights reserved.
- * @author Evert Pot (http://www.rooftopsolutions.nl/)
+ * @copyright Copyright (C) 2007-2014 fruux GmbH (https://fruux.com/).
+ * @author Evert Pot (http://evertpot.com/)
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
  */
 class Sabre_DAVACL_Plugin extends Sabre_DAV_ServerPlugin {
@@ -238,7 +238,7 @@ class Sabre_DAVACL_Plugin extends Sabre_DAV_ServerPlugin {
         $userName = $authPlugin->getCurrentUser();
         if (!$userName) return null;
 
-        return $this->defaultUsernamePath . '/' . $userName;
+        return $this->defaultUsernamePath . '/' .  $userName;
 
     }
 
@@ -838,7 +838,7 @@ class Sabre_DAVACL_Plugin extends Sabre_DAV_ServerPlugin {
             if (false !== ($index = array_search('{DAV:}principal-URL', $requestedProperties))) {
 
                 unset($requestedProperties[$index]);
-                $returnedProperties[200]['{DAV:}principal-URL'] = new Sabre_DAV_Property_Href(Sabre_DAV_URLUtil::encodePath($node->getPrincipalUrl()) . '/');
+                $returnedProperties[200]['{DAV:}principal-URL'] = new Sabre_DAV_Property_Href($node->getPrincipalUrl() . '/');
 
             }
             if (false !== ($index = array_search('{DAV:}group-member-set', $requestedProperties))) {
@@ -874,7 +874,7 @@ class Sabre_DAVACL_Plugin extends Sabre_DAV_ServerPlugin {
 
             unset($requestedProperties[$index]);
             if ($url = $this->getCurrentUserPrincipal()) {
-                $returnedProperties[200]['{DAV:}current-user-principal'] = new Sabre_DAVACL_Property_Principal(Sabre_DAVACL_Property_Principal::HREF, Sabre_DAV_URLUtil::encodePath($url) . '/');
+                $returnedProperties[200]['{DAV:}current-user-principal'] = new Sabre_DAVACL_Property_Principal(Sabre_DAVACL_Property_Principal::HREF, $url . '/');
             } else {
                 $returnedProperties[200]['{DAV:}current-user-principal'] = new Sabre_DAVACL_Property_Principal(Sabre_DAVACL_Property_Principal::UNAUTHENTICATED);
             }
