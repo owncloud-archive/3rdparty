@@ -111,8 +111,6 @@ abstract class Sabre_CalDAV_Backend_Abstract implements Sabre_CalDAV_Backend_Bac
         $result = array();
         $objects = $this->getCalendarObjects($calendarId);
 
-        $validator = new Sabre_CalDAV_CalendarQueryValidator();
-
         foreach($objects as $object) {
 
             if ($this->validateFilterForObject($object, $filters)) {
