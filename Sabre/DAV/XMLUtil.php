@@ -113,7 +113,7 @@ class Sabre_DAV_XMLUtil {
 
         // Retaining old error setting
         $oldErrorSetting =  libxml_use_internal_errors(true);
-	libxml_disable_entity_loader(true);
+		$loadEntities = libxml_disable_entity_loader(true);
 
         // Clearing any previous errors
         libxml_clear_errors();
@@ -124,6 +124,7 @@ class Sabre_DAV_XMLUtil {
         $dom->preserveWhiteSpace = false;
         
         $dom->loadXML(self::convertDAVNamespace($xml),LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_DTDLOAD | LIBXML_DTDATTR);
+		libxml_disable_entity_loader($loadEntities);
 
         if ($error = libxml_get_last_error()) {
             libxml_clear_errors();
