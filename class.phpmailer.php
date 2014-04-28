@@ -408,7 +408,7 @@ class PHPMailer {
    */
   public function IsSendmail() {
     if (!stristr(ini_get('sendmail_path'), 'sendmail')) {
-      $this->Sendmail = '/var/qmail/bin/sendmail';
+      $this->Sendmail = '/usr/sbin/sendmail';
     }
     $this->Mailer = 'sendmail';
   }
