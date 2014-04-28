@@ -1,42 +1,46 @@
 <?php
 
+namespace Sabre\DAV;
+
+use Sabre\HTTP;
+
 require_once 'Sabre/HTTP/ResponseMock.php';
 require_once 'Sabre/DAV/AbstractServer.php';
 require_once 'Sabre/DAV/Exception.php';
 
-class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
+class ServerSimpleTest extends AbstractServer{
 
     function testConstructArray() {
 
         $nodes = array(
-            new Sabre_DAV_SimpleCollection('hello')
+            new SimpleCollection('hello')
         );
 
-        $server = new Sabre_DAV_Server($nodes);
+        $server = new Server($nodes);
         $this->assertEquals($nodes[0], $server->tree->getNodeForPath('hello'));
 
     }
 
     /**
-     * @expectedException Sabre_DAV_Exception
+     * @expectedException Sabre\DAV\Exception
      */
     function testConstructIncorrectObj() {
 
         $nodes = array(
-            new Sabre_DAV_SimpleCollection('hello'),
-            new STDClass(),
+            new SimpleCollection('hello'),
+            new \STDClass(),
         );
 
-        $server = new Sabre_DAV_Server($nodes);
+        $server = new Server($nodes);
 
     }
 
     /**
-     * @expectedException Sabre_DAV_Exception
+     * @expectedException Sabre\DAV\Exception
      */
     function testConstructInvalidArg() {
 
-        $server = new Sabre_DAV_Server(1);
+        $server = new Server(1);
 
     }
 
@@ -47,14 +51,14 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'REQUEST_METHOD' => 'GET',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $this->server->httpRequest = ($request);
         $this->server->exec();
 
         $this->assertEquals(array(
             'Content-Type' => 'application/octet-stream',
             'Content-Length' => 13,
-            'Last-Modified' => Sabre_HTTP_Util::toHTTPDate(new DateTime('@' . filemtime($this->tempDir . '/test.txt'))),
+            'Last-Modified' => HTTP\Util::toHTTPDate(new \DateTime('@' . filemtime($this->tempDir . '/test.txt'))),
             ),
             $this->response->headers
          );
@@ -71,14 +75,14 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'SERVER_PROTOCOL' => 'HTTP/1.0',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $this->server->httpRequest = ($request);
         $this->server->exec();
 
         $this->assertEquals(array(
             'Content-Type' => 'application/octet-stream',
             'Content-Length' => 13,
-            'Last-Modified' => Sabre_HTTP_Util::toHTTPDate(new DateTime('@' . filemtime($this->tempDir . '/test.txt'))),
+            'Last-Modified' => HTTP\Util::toHTTPDate(new \DateTime('@' . filemtime($this->tempDir . '/test.txt'))),
             ),
             $this->response->headers
          );
@@ -95,7 +99,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'REQUEST_METHOD' => 'GET',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $this->server->httpRequest = ($request);
         $this->server->exec();
         $this->assertEquals('HTTP/1.1 404 Not Found',$this->response->status);
@@ -109,7 +113,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'REQUEST_METHOD' => 'GET',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $this->server->httpRequest = ($request);
         $this->server->exec();
         $this->assertEquals('HTTP/1.1 404 Not Found',$this->response->status);
@@ -129,14 +133,14 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'REQUEST_METHOD' => 'GET',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $this->server->httpRequest = ($request);
         $this->server->exec();
 
         $this->assertEquals(array(
             'Content-Type' => 'application/octet-stream',
             'Content-Length' => 13,
-            'Last-Modified' => Sabre_HTTP_Util::toHTTPDate(new DateTime('@' . filemtime($this->tempDir . '/test.txt'))),
+            'Last-Modified' => HTTP\Util::toHTTPDate(new \DateTime('@' . filemtime($this->tempDir . '/test.txt'))),
             ),
             $this->response->headers
          );
@@ -154,14 +158,14 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'REQUEST_METHOD' => 'HEAD',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $this->server->httpRequest = ($request);
         $this->server->exec();
 
         $this->assertEquals(array(
             'Content-Type' => 'application/octet-stream',
             'Content-Length' => 13,
-            'Last-Modified' => Sabre_HTTP_Util::toHTTPDate(new DateTime('@' .  filemtime($this->tempDir . '/test.txt'))),
+            'Last-Modified' => HTTP\Util::toHTTPDate(new \DateTime('@' .  filemtime($this->tempDir . '/test.txt'))),
             ),
             $this->response->headers
          );
@@ -178,7 +182,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'REQUEST_METHOD' => 'PUT',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $request->setBody('Testing new file');
         $this->server->httpRequest = ($request);
         $this->server->exec();
@@ -201,7 +205,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'HTTP_IF_NONE_MATCH' => '*',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $request->setBody('Testing new file');
         $this->server->httpRequest = ($request);
         $this->server->exec();
@@ -222,7 +226,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'REQUEST_METHOD' => 'PUT',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $request->setBody('Testing updated file');
         $this->server->httpRequest = ($request);
         $this->server->exec();
@@ -242,7 +246,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'REQUEST_METHOD' => 'PUT',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $request->setBody('Testing updated file');
         $this->server->httpRequest = ($request);
         $this->server->exec();
@@ -259,7 +263,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'HTTP_CONTENT_RANGE' => 'bytes/100-200',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $request->setBody('Testing new file');
         $this->server->httpRequest = ($request);
         $this->server->exec();
@@ -276,7 +280,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'REQUEST_METHOD' => 'DELETE',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $this->server->httpRequest = ($request);
         $this->server->exec();
 
@@ -300,7 +304,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
         mkdir($this->tempDir.'/testcol');
         file_put_contents($this->tempDir.'/testcol/test.txt','Hi! I\'m a file with a short lifespan');
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $this->server->httpRequest = ($request);
         $this->server->exec();
 
@@ -320,7 +324,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'REQUEST_METHOD' => 'OPTIONS',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $this->server->httpRequest = ($request);
         $this->server->exec();
 
@@ -330,7 +334,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'Allow'          => 'OPTIONS, GET, HEAD, DELETE, PROPFIND, PUT, PROPPATCH, COPY, MOVE, REPORT',
             'Accept-Ranges'  => 'bytes',
             'Content-Length' => '0',
-            'X-Sabre-Version' => Sabre_DAV_Version::VERSION,
+            'X-Sabre-Version' => Version::VERSION,
         ),$this->response->headers);
 
         $this->assertEquals('HTTP/1.1 200 OK',$this->response->status);
@@ -345,7 +349,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'REQUEST_METHOD' => 'BLABLA',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $this->server->httpRequest = ($request);
         $this->server->exec();
 
@@ -365,7 +369,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'REQUEST_METHOD' => 'GET',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $this->server->httpRequest = ($request);
         $this->server->exec();
 
@@ -384,7 +388,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'REQUEST_METHOD' => 'HEAD',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $this->server->httpRequest = ($request);
         $this->server->exec();
 
@@ -399,7 +403,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'REQUEST_METHOD' => 'GET',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $this->server->setBaseUri('/blabla/');
         $this->assertEquals('/blabla/',$this->server->getBaseUri());
         $this->server->httpRequest = ($request);
@@ -408,7 +412,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
         $this->assertEquals(array(
             'Content-Type' => 'application/octet-stream',
             'Content-Length' => 13,
-            'Last-Modified' => Sabre_HTTP_Util::toHTTPDate(new DateTime('@' . filemtime($this->tempDir . '/test.txt'))),
+            'Last-Modified' => HTTP\Util::toHTTPDate(new \DateTime('@' . filemtime($this->tempDir . '/test.txt'))),
             ),
             $this->response->headers
          );
@@ -514,7 +518,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
 
             $this->fail('Expected an exception');
 
-        } catch (Sabre_DAV_Exception_Forbidden $e) {
+        } catch (Exception\Forbidden $e) {
 
             // This was expected
 
@@ -523,7 +527,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
     }
 
     /**
-     * @covers Sabre_DAV_Server::guessBaseUri
+     * @covers \Sabre\DAV\Server::guessBaseUri
      */
     function testGuessBaseUri() {
 
@@ -532,8 +536,8 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'PATH_INFO'   => '/root',
         );
 
-        $httpRequest = new Sabre_HTTP_Request($serverVars);
-        $server = new Sabre_DAV_Server();
+        $httpRequest = new HTTP\Request($serverVars);
+        $server = new Server();
         $server->httpRequest = $httpRequest;
 
         $this->assertEquals('/index.php/', $server->guessBaseUri());
@@ -542,7 +546,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
 
     /**
      * @depends testGuessBaseUri
-     * @covers Sabre_DAV_Server::guessBaseUri
+     * @covers Sabre\DAV\Server::guessBaseUri
      */
     function testGuessBaseUriPercentEncoding() {
 
@@ -551,8 +555,8 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'PATH_INFO'   => '/dir/path2/path with spaces',
         );
 
-        $httpRequest = new Sabre_HTTP_Request($serverVars);
-        $server = new Sabre_DAV_Server();
+        $httpRequest = new HTTP\Request($serverVars);
+        $server = new Server();
         $server->httpRequest = $httpRequest;
 
         $this->assertEquals('/index.php/', $server->guessBaseUri());
@@ -561,7 +565,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
 
     /**
      * @depends testGuessBaseUri
-     * @covers Sabre_DAV_Server::guessBaseUri
+     * @covers \Sabre\DAV\Server::guessBaseUri
      */
     /*
     function testGuessBaseUriPercentEncoding2() {
@@ -572,8 +576,8 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'PATH_INFO'   => '/dir/path2/path with spaces',
         );
 
-        $httpRequest = new Sabre_HTTP_Request($serverVars);
-        $server = new Sabre_DAV_Server();
+        $httpRequest = new HTTP\Request($serverVars);
+        $server = new Server();
         $server->httpRequest = $httpRequest;
 
         $this->assertEquals('/some%20directory+mixed/index.php/', $server->guessBaseUri());
@@ -587,8 +591,8 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'PATH_INFO'   => '/root/',
         );
 
-        $httpRequest = new Sabre_HTTP_Request($serverVars);
-        $server = new Sabre_DAV_Server();
+        $httpRequest = new HTTP\Request($serverVars);
+        $server = new Server();
         $server->httpRequest = $httpRequest;
 
         $this->assertEquals('/index.php/', $server->guessBaseUri());
@@ -601,8 +605,8 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'REQUEST_URI' => '/index.php/root',
         );
 
-        $httpRequest = new Sabre_HTTP_Request($serverVars);
-        $server = new Sabre_DAV_Server();
+        $httpRequest = new HTTP\Request($serverVars);
+        $server = new Server();
         $server->httpRequest = $httpRequest;
 
         $this->assertEquals('/', $server->guessBaseUri());
@@ -615,8 +619,8 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'REQUEST_URI' => '/a/b/c/test.php',
         );
 
-        $httpRequest = new Sabre_HTTP_Request($serverVars);
-        $server = new Sabre_DAV_Server();
+        $httpRequest = new HTTP\Request($serverVars);
+        $server = new Server();
         $server->httpRequest = $httpRequest;
 
         $this->assertEquals('/', $server->guessBaseUri());
@@ -625,7 +629,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
 
 
     /**
-     * @covers Sabre_DAV_Server::guessBaseUri
+     * @covers \Sabre\DAV\Server::guessBaseUri
      * @depends testGuessBaseUri
      */
     function testGuessBaseUriQueryString() {
@@ -635,16 +639,43 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'PATH_INFO'   => '/root',
         );
 
-        $httpRequest = new Sabre_HTTP_Request($serverVars);
-        $server = new Sabre_DAV_Server();
+        $httpRequest = new HTTP\Request($serverVars);
+        $server = new Server();
         $server->httpRequest = $httpRequest;
 
         $this->assertEquals('/index.php/', $server->guessBaseUri());
 
     }
 
+    /**
+     * @covers \Sabre\DAV\Server::guessBaseUri
+     * @depends testGuessBaseUri
+     * @expectedException \Sabre\DAV\Exception
+     */
+    function testGuessBaseUriBadConfig() {
+
+        $serverVars = array(
+            'REQUEST_URI' => '/index.php/root/heyyy',
+            'PATH_INFO'   => '/root',
+        );
+
+        $httpRequest = new HTTP\Request($serverVars);
+        $server = new Server();
+        $server->httpRequest = $httpRequest;
+
+        $server->guessBaseUri();
+
+    }
+
     function testTriggerException() {
 
+        $serverVars = array(
+            'REQUEST_URI' => '/',
+            'REQUEST_METHOD' => 'FOO',
+        );
+
+        $httpRequest = new HTTP\Request($serverVars);
+        $this->server->httpRequest = $httpRequest;
         $this->server->subscribeEvent('beforeMethod',array($this,'exceptionTrigger'));
         $this->server->exec();
 
@@ -658,7 +689,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
 
     function exceptionTrigger() {
 
-        throw new Sabre_DAV_Exception('Hola');
+        throw new Exception('Hola');
 
     }
 
@@ -669,7 +700,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'REQUEST_METHOD' => 'REPORT',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $this->server->httpRequest = ($request);
         $this->server->httpRequest->setBody('<?xml version="1.0"?><bla:myreport xmlns:bla="http://www.rooftopsolutions.nl/NS"></bla:myreport>');
         $this->server->exec();
@@ -691,7 +722,7 @@ class Sabre_DAV_ServerSimpleTest extends Sabre_DAV_AbstractServer{
             'REQUEST_METHOD' => 'REPORT',
         );
 
-        $request = new Sabre_HTTP_Request($serverVars);
+        $request = new HTTP\Request($serverVars);
         $this->server->httpRequest = ($request);
         $this->server->httpRequest->setBody('<?xml version="1.0"?><bla:myreport xmlns:bla="http://www.rooftopsolutions.nl/NS"></bla:myreport>');
         $this->server->subscribeEvent('report',array($this,'reportHandler'));

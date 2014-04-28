@@ -13,6 +13,7 @@ namespace Assetic\Test\Filter;
 
 use Assetic\Asset\FileAsset;
 use Assetic\Asset\StringAsset;
+use Assetic\Factory\AssetFactory;
 use Assetic\Filter\ScssphpFilter;
 
 /**
@@ -62,10 +63,8 @@ EOF;
         $this->assertEquals($expected, $asset->getContent(), '->filterLoad() sets an include path based on source url');
     }
 
-    public function testCompassExtension()
+    public function testCompassExtensionCanBeEnabled()
     {
-        $this->markTestIncomplete('Someone fix this, SVP? (Undefined mixin "box-shadow")');
-
         $expected = <<<EOF
 .shadow {
   -webkit-box-shadow : 10px 10px 8px red;
@@ -78,13 +77,25 @@ EOF;
         $asset->load();
 
         $this->getFilter(true)->filterLoad($asset);
-        $this->assertEquals($expected, $asset->getContent(), 'compass plugin can be enabled');
+        $this->assertEquals(
+            $expected,
+            $asset->getContent(),
+            'compass plugin can be enabled'
+        );
+    }
+
+    public function testCompassExtensionCanBeDisabled()
+    {
+        $this->setExpectedException(
+            "Exception",
+            "Undefined mixin box-shadow: failed at `@include box-shadow(10px "
+            . "10px 8px red);` line: 4"
+        );
 
         $asset = new FileAsset(__DIR__.'/fixtures/sass/main_compass.scss');
         $asset->load();
 
         $this->getFilter(false)->filterLoad($asset);
-        $this->assertEquals("@import \"compass\";\n", $asset->getContent(), 'compass plugin can be disabled');
     }
 
     public function testSetImportPath()
@@ -104,16 +115,45 @@ EOF;
     {
         $asset = new StringAsset('.foo{ color: bar(); }');
         $asset->load();
-        
+
         $filter = $this->getFilter();
         $filter->registerFunction('bar',function(){ return 'red';});
         $filter->filterLoad($asset);
-        
+
         $expected = new StringAsset('.foo{ color: red;}');
         $expected->load();
         $filter->filterLoad($expected);
 
         $this->assertEquals($expected->getContent(), $asset->getContent(), 'custom function can be registered');
+    }
+
+    public function testSetFormatter()
+    {
+        $actual = new StringAsset(".foo {\n  color: #fff;\n}");
+        $actual->load();
+
+        $filter = $this->getFilter();
+        $filter->setFormatter("scss_formatter_compressed");
+        $filter->filterLoad($actual);
+
+        $expected = new StringAsset('.foo{color:#fff;}');
+        $expected->load();
+
+        $this->assertEquals(
+            $expected->getContent(),
+            $actual->getContent(),
+            'scss_formatter can be changed'
+        );
+    }
+
+    public function testGetChildren()
+    {
+        $factory = new AssetFactory('');
+
+        $filter = $this->getFilter();
+        $children = $filter->getChildren($factory, '@import "main";', __DIR__.'/fixtures/sass');
+
+        $this->assertCount(2, $children);
     }
 
     // private
