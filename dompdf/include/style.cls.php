@@ -825,7 +825,7 @@ class Style {
     if ( !isset($this->_parent_font_size) )
       $this->_parent_font_size = self::$default_font_size;
     
-    switch ($fs) {
+    switch ((string) $fs) {
     case "xx-small":
     case "x-small":
     case "small":
