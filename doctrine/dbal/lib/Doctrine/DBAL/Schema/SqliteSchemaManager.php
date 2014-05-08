@@ -170,8 +170,14 @@ class SqliteSchemaManager extends AbstractSchemaManager
         // fetch primary
         $stmt = $this->_conn->executeQuery( "PRAGMA TABLE_INFO ('$tableName')" );
         $indexArray = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        foreach($indexArray as $indexColumnRow) {
-            if($indexColumnRow['pk'] == "1") {
+        usort($indexArray, function($a, $b) {
+            if ($a['pk'] == $b['pk']) {
+                return $a['cid'] - $b['cid'];
+            }
+            return $a['pk'] - $b['pk'];
+        });
+        foreach ($indexArray as $indexColumnRow) {
+            if ($indexColumnRow['pk'] != "0") {
                 $indexBuffer[] = array(
                     'key_name' => 'primary',
                     'primary' => true,
@@ -218,7 +224,7 @@ class SqliteSchemaManager extends AbstractSchemaManager
         $autoincrementColumn = null;
         $autoincrementCount = 0;
         foreach ($tableColumns as $tableColumn) {
-            if ('1' == $tableColumn['pk']) {
+            if ('0' != $tableColumn['pk']) {
                 $autoincrementCount++;
                 if (null === $autoincrementColumn && 'integer' == strtolower($tableColumn['type'])) {
                     $autoincrementColumn = $tableColumn['name'];
