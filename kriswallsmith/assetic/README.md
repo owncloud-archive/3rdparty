@@ -90,7 +90,7 @@ The core provides the following filters in the `Assetic\Filter` namespace:
  * `JpegtranFilter`: optimize your JPEGs
  * `JSMinFilter`: minifies Javascript
  * `JSMinPlusFilter`: minifies Javascript
- * `JSqueeze`: compresses Javascript
+ * `JSqueezeFilter`: compresses Javascript
  * `LessFilter`: parses LESS into CSS (using less.js with node.js)
  * `LessphpFilter`: parses LESS into CSS (using lessphp)
  * `OptiPngFilter`: optimize your PNGs
@@ -278,7 +278,7 @@ environment:
 ``` php
 <?php
 
-$twig->addExtension(new AsseticExtension($factory, $debug));
+$twig->addExtension(new AsseticExtension($factory));
 ```
 
 Once in place, the extension exposes a stylesheets and a javascripts tag with a syntax similar

@@ -37,11 +37,11 @@ use Doctrine\DBAL\DBALException;
 class OraclePlatform extends AbstractPlatform
 {
     /**
-     * Assertion for Oracle identifiers
+     * Assertion for Oracle identifiers.
      *
      * @link http://docs.oracle.com/cd/B19306_01/server.102/b14200/sql_elements008.htm
      *
-     * @param string
+     * @param string $identifier
      *
      * @throws DBALException
      */
@@ -307,11 +307,17 @@ class OraclePlatform extends AbstractPlatform
         return 'CLOB';
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getListDatabasesSQL()
     {
         return 'SELECT username FROM all_users';
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getListSequencesSQL($database)
     {
         return "SELECT sequence_name, min_value, increment_by FROM sys.all_sequences ".
@@ -355,6 +361,8 @@ class OraclePlatform extends AbstractPlatform
      */
     public function getListTableIndexesSQL($table, $currentDatabase = null)
     {
+        $table = strtoupper($table);
+
         return "SELECT uind.index_name AS name, " .
              "       uind.index_type AS type, " .
              "       decode( uind.uniqueness, 'NONUNIQUE', 0, 'UNIQUE', 1 ) AS is_unique, " .
@@ -365,6 +373,9 @@ class OraclePlatform extends AbstractPlatform
              "WHERE uind.index_name = uind_col.index_name AND uind_col.table_name = '$table' ORDER BY uind_col.column_position ASC";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getListTablesSQL()
     {
         return 'SELECT * FROM sys.user_tables';
@@ -378,19 +389,34 @@ class OraclePlatform extends AbstractPlatform
         return 'SELECT view_name, text FROM sys.user_views';
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getCreateViewSQL($name, $sql)
     {
         return 'CREATE VIEW ' . $name . ' AS ' . $sql;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getDropViewSQL($name)
     {
         return 'DROP VIEW '. $name;
     }
 
+    /**
+     * @param string  $name
+     * @param string  $table
+     * @param integer $start
+     *
+     * @return array
+     */
     public function getCreateAutoincrementSql($name, $table, $start = 1)
     {
-        $table = $this->getOracleInternalName($table);
+        $table = strtoupper($table);
+        $name = strtoupper($name);
+
         $sql   = array();
 
         $indexName  = $table . '_AI_PK';
@@ -406,14 +432,11 @@ BEGIN
   END IF;
 END;';
 
-        $sequenceNameNotQuoted = $table . '_SEQ';
-        $sequenceName = $this->quoteIdentifier($sequenceNameNotQuoted);
+        $sequenceName = $table . '_' . $name . '_SEQ';
         $sequence = new Sequence($sequenceName, $start);
         $sql[] = $this->getCreateSequenceSQL($sequence);
 
         $triggerName  = $table . '_AI_PK';
-        $triggerName = $this->quoteIdentifier($triggerName);
-        $table = $this->quoteIdentifier($table);
         $sql[] = 'CREATE TRIGGER ' . $triggerName . '
    BEFORE INSERT
    ON ' . $table . '
@@ -428,7 +451,7 @@ BEGIN
    ELSE
       SELECT NVL(Last_Number, 0) INTO last_Sequence
         FROM User_Sequences
-       WHERE Sequence_Name = \'' . $sequenceNameNotQuoted . '\';
+       WHERE Sequence_Name = \'' . $sequenceName . '\';
       SELECT :NEW.' . $name . ' INTO last_InsertID FROM DUAL;
       WHILE (last_InsertID > last_Sequence) LOOP
          SELECT ' . $sequenceName . '.NEXTVAL INTO last_Sequence FROM DUAL;
@@ -439,9 +462,14 @@ END;';
         return $sql;
     }
 
+    /**
+     * @param string $table
+     *
+     * @return array
+     */
     public function getDropAutoincrementSql($table)
     {
-        $table = $this->getOracleInternalName($table);
+        $table = strtoupper($table);
         $trigger = $table . '_AI_PK';
 
         $sql[] = 'DROP TRIGGER ' . $trigger;
@@ -453,9 +481,12 @@ END;';
         return $sql;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getListTableForeignKeysSQL($table)
     {
-        $table = $this->getOracleInternalName($table);
+        $table = strtoupper($table);
 
         return "SELECT alc.constraint_name,
           alc.DELETE_RULE,
@@ -474,17 +505,26 @@ LEFT JOIN user_cons_columns r_cols
       AND cols.position = r_cols.position
     WHERE alc.constraint_name = cols.constraint_name
       AND alc.constraint_type = 'R'
-      AND alc.table_name = '".$table."'";
+      AND alc.table_name = '".$table."'
+ ORDER BY alc.constraint_name ASC, cols.position ASC";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getListTableConstraintsSQL($table)
     {
-        $table = $this->getOracleInternalName($table);
+        $table = strtoupper($table);
         return 'SELECT * FROM user_constraints WHERE table_name = \'' . $table . '\'';
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getListTableColumnsSQL($table, $database = null)
     {
+        $table = strtoupper($table);
+
         $tabColumnsTableName = "user_tab_columns";
         $ownerCondition = '';
 
@@ -568,13 +608,27 @@ LEFT JOIN user_cons_columns r_cols
             }
 
             $column = $columnDiff->column;
-            $columnInfo = $column->toArray();
-            if (!in_array('notnull', $columnDiff->changedProperties)) {
-                $columnInfo['notnull'] = false;
+            $columnHasChangedComment = $columnDiff->hasChanged('comment');
+
+            /**
+             * Do not add query part if only comment has changed
+             */
+            if ( ! ($columnHasChangedComment && count($columnDiff->changedProperties) === 1)) {
+                $columnInfo = $column->toArray();
+
+                if ( ! $columnDiff->hasChanged('notnull')) {
+                    $columnInfo['notnull'] = false;
+                }
+
+                $fields[] = $column->getQuotedName($this) . ' ' . $this->getColumnDeclarationSQL('', $columnInfo);
             }
-            $fields[] = $column->getQuotedName($this). ' ' . $this->getColumnDeclarationSQL('', $columnInfo);
-            if ($columnDiff->hasChanged('comment') && $comment = $this->getColumnComment($column)) {
-                $commentsSQL[] = $this->getCommentOnColumnSQL($diff->name, $column->getName(), $comment);
+
+            if ($columnHasChangedComment) {
+                $commentsSQL[] = $this->getCommentOnColumnSQL(
+                    $diff->name,
+                    $column->getName(),
+                    $this->getColumnComment($column)
+                );
             }
         }
 
@@ -679,6 +733,9 @@ LEFT JOIN user_cons_columns r_cols
         return strtoupper($column);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getCreateTemporaryTableSnippetSQL()
     {
         return "CREATE GLOBAL TEMPORARY TABLE";
@@ -821,13 +878,5 @@ LEFT JOIN user_cons_columns r_cols
     public function getBlobTypeDeclarationSQL(array $field)
     {
         return 'BLOB';
-    }
-
-    protected function getOracleInternalName($table)
-    {
-        if ($table[0] == '"') {
-                return str_replace(array('`', '"'), '', $table);
-        }
-        return strtoupper($table);
     }
 }
