@@ -3,7 +3,7 @@
 	"description": "All 3rdparty components",
 	"license": "MIT",
 	"config": {
-		"vendor-dir": ""
+		"vendor-dir": "server-components"
 	},
 	"autoload": {
 	},
