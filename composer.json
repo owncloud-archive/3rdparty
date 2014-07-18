@@ -3,30 +3,32 @@
 	"description": "All 3rdparty components",
 	"license": "MIT",
 	"config": {
-		"vendor-dir": "."
+		"vendor-dir": "server-components"
 	},
-	"repositories": [
-		{
-			"type":"package",
-			"package": {
-				"name": "mcnetic/phpzipstreamer",
-				"version":"master",
-				"source": {
-					"url": "https://github.com/McNetic/PHPZipStreamer.git",
-					"type": "git",
-					"reference":"master"
-				}
-			}
-		}
-	],
+	"autoload": {
+		"classmap": [
+			"mcnetic/phpzipstreamer"
+		]
+	},
 	"require": {
-		"sabre/dav" : "1.8.10",
-		"mcnetic/phpzipstreamer": "dev-master",
+		"sabre/dav": "1.8.10",
 		"kriswallsmith/assetic": "1.2.*@dev",
 		"phpmailer/phpmailer": "v5.2.8",
+		"hautelook/phpass": "0.3.0",
 		"phpseclib/phpseclib": "*",
 		"rackspace/php-opencloud": "v1.9.2",
-		"isoft/mssql-bundle": "master-dev"
+		"symfony/console": "v2.5.2",
+		"symfony/routing": "v2.5.2",
+		"symfony/process": "v2.5.2",
+		"symfony/event-dispatcher": "v2.5.2",
+		"pimple/pimple": "1.1.x",
+		"ircmaxell/password-compat": "dev-master",
+		"patchwork/utf8": "@stable",
+		"guzzle/http": "@stable",
+		"phansys/getid3": "@stable",
+		"pear/archive_tar": "@stable",
+		"isoft/mssql-bundle": "dev-master",
+		"sabre/vobject": "@stable"
 	}
 }
 
