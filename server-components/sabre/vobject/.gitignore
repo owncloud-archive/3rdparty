@@ -1,0 +1,7 @@
+# Composer stuff
+vendor/
+composer.lock
+tests/cov/
+
+# OS X
+.DS_Store

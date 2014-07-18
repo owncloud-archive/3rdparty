@@ -3,7 +3,7 @@
 	"description": "All 3rdparty components",
 	"license": "MIT",
 	"config": {
-		"vendor-dir": "server-components"
+		"vendor-dir": ""
 	},
 	"autoload": {
 	},
@@ -15,12 +15,10 @@
 		"hautelook/phpass": "0.3.0",
 		"phpseclib/phpseclib": "*",
 		"rackspace/php-opencloud": "v1.9.2",
-		"symfony/console": "@stable",
-		"symfony/routing": "@stable",
-		"symfony/process": "@stable",
-		"symfony/event-dispatcher": "@stable",
-		"doctrine/common": "@stable",
-		"doctrine/dbal": "@stable",
+		"symfony/console": "v2.5.2",
+		"symfony/routing": "v2.5.2",
+		"symfony/process": "v2.5.2",
+		"symfony/event-dispatcher": "v2.5.2",
 		"pimple/pimple": "1.1.x",
 		"ircmaxell/password-compat": "dev-master",
 		"patchwork/utf8": "@stable",
