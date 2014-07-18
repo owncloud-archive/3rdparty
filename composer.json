@@ -6,10 +6,12 @@
 		"vendor-dir": "server-components"
 	},
 	"autoload": {
+		"classmap": [
+			"mcnetic/phpzipstreamer"
+		]
 	},
 	"require": {
 		"sabre/dav": "1.8.10",
-		"mcnetic/zipstreamer": "dev-master",
 		"kriswallsmith/assetic": "1.2.*@dev",
 		"phpmailer/phpmailer": "v5.2.8",
 		"hautelook/phpass": "0.3.0",

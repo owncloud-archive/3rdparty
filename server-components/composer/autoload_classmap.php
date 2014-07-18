@@ -6,8 +6,18 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Count64' => $baseDir . '/mcnetic/phpzipstreamer/ZipStreamer.php',
+    'Count64Base' => $baseDir . '/mcnetic/phpzipstreamer/ZipStreamer.php',
+    'Count64_32' => $baseDir . '/mcnetic/phpzipstreamer/ZipStreamer.php',
+    'Count64_64' => $baseDir . '/mcnetic/phpzipstreamer/ZipStreamer.php',
+    'DOS' => $baseDir . '/mcnetic/phpzipstreamer/ZipStreamer.php',
+    'ExtFileAttr' => $baseDir . '/mcnetic/phpzipstreamer/ZipStreamer.php',
+    'GPFLAGS' => $baseDir . '/mcnetic/phpzipstreamer/ZipStreamer.php',
+    'GZMETHOD' => $baseDir . '/mcnetic/phpzipstreamer/ZipStreamer.php',
     'PHPMailer' => $vendorDir . '/phpmailer/phpmailer/class.phpmailer.php',
     'POP3' => $vendorDir . '/phpmailer/phpmailer/class.pop3.php',
     'SMTP' => $vendorDir . '/phpmailer/phpmailer/class.smtp.php',
+    'UNIX' => $baseDir . '/mcnetic/phpzipstreamer/ZipStreamer.php',
+    'ZipStreamer' => $baseDir . '/mcnetic/phpzipstreamer/ZipStreamer.php',
     'phpmailerException' => $vendorDir . '/phpmailer/phpmailer/class.phpmailer.php',
 );

@@ -127,50 +127,6 @@
         ]
     },
     {
-        "name": "mcnetic/zipstreamer",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/McNetic/PHPZipStreamer.git",
-            "reference": "e5570ff768f09b3551715a62899f2971b946ba3b"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/McNetic/PHPZipStreamer/zipball/e5570ff768f09b3551715a62899f2971b946ba3b",
-            "reference": "e5570ff768f09b3551715a62899f2971b946ba3b",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "time": "2014-04-04 10:55:12",
-        "type": "library",
-        "installation-source": "source",
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL"
-        ],
-        "authors": [
-            {
-                "name": "Nicolai Ehemann",
-                "email": "en@enlightened.de",
-                "role": "Author/Maintainer"
-            },
-            {
-                "name": "André Rothe",
-                "email": "arothe@zks.uni-leipzig.de",
-                "role": "Contributor"
-            }
-        ],
-        "description": "Stream zip files without i/o overhead",
-        "homepage": "https://github.com/McNetic/PHPZipStreamer",
-        "keywords": [
-            "stream",
-            "zip"
-        ]
-    },
-    {
         "name": "symfony/process",
         "version": "v2.5.2",
         "version_normalized": "2.5.2.0",
