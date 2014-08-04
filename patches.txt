@@ -1,3 +1,4 @@
 Patches:
 
+- Sabre: replaced fpassthru due to large file issues (https://github.com/owncloud/core/issues/8578#issuecomment-49812124)
 - some external entity patches from https://github.com/owncloud/3rdparty/pull/74 - they should get superseeded by updating the affected libraries.
