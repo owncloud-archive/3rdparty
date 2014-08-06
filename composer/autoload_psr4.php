@@ -6,4 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = $vendorDir;
 
 return array(
+    'ZipStreamer\\' => array($vendorDir . '/mcnetic/zipstreamer/src'),
 );
