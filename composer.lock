@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6a5a32286b2594a8eeda466dadea2e4e",
+    "hash": "72ad3e3bf122156ffb22163945887011",
     "packages": [
         {
             "name": "guzzle/common",
@@ -205,38 +205,43 @@
             "time": "2014-01-28 22:14:17"
         },
         {
-            "name": "isoft/mssql-bundle",
-            "version": "dev-master",
-            "target-dir": "Realestate/MssqlBundle",
+            "name": "ircmaxell/password-compat",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/intellectsoft-uk/MssqlBundle.git",
-                "reference": "98a020cd39f8bfc1282e734c7c5038e129411981"
+                "url": "https://github.com/ircmaxell/password_compat.git",
+                "reference": "1fc1521b5e9794ea77e4eca30717be9635f1d4f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/intellectsoft-uk/MssqlBundle/zipball/98a020cd39f8bfc1282e734c7c5038e129411981",
-                "reference": "98a020cd39f8bfc1282e734c7c5038e129411981",
+                "url": "https://api.github.com/repos/ircmaxell/password_compat/zipball/1fc1521b5e9794ea77e4eca30717be9635f1d4f4",
+                "reference": "1fc1521b5e9794ea77e4eca30717be9635f1d4f4",
                 "shasum": ""
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Realestate\\MssqlBundle": ""
-                }
+                "files": [
+                    "lib/password.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
             "authors": [
                 {
-                    "name": "Realestate"
-                },
-                {
-                    "name": "Vitaly Zhloba",
-                    "email": "vitaly.zhloba@gmail.com"
+                    "name": "Anthony Ferrara",
+                    "email": "ircmaxell@ircmaxell.com",
+                    "homepage": "http://blog.ircmaxell.com"
                 }
             ],
-            "description": "Driver for work with MsSQL server",
-            "time": "2014-02-12 08:38:02"
+            "description": "A compatibility library for the proposed simplified password hashing algorithm: https://wiki.php.net/rfc/password_hash",
+            "homepage": "https://github.com/ircmaxell/password_compat",
+            "keywords": [
+                "hashing",
+                "password"
+            ],
+            "time": "2013-04-30 19:58:08"
         },
         {
             "name": "james-heinrich/getid3",
@@ -356,7 +361,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-07-11 09:09:02"
+            "time": "2014-07-28 20:17:39"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -795,16 +800,23 @@
             "time": "2014-02-11 13:52:09"
         }
     ],
-    "packages-dev": [],
-    "aliases": [],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
         "mcnetic/phpzipstreamer": 20,
         "kriswallsmith/assetic": 20,
-        "james-heinrich/getid3": 20,
-        "isoft/mssql-bundle": 20
+        "james-heinrich/getid3": 20
     },
     "prefer-stable": false,
-    "platform": [],
-    "platform-dev": []
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
 }
