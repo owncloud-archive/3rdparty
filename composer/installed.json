@@ -743,42 +743,6 @@
         ]
     },
     {
-        "name": "isoft/mssql-bundle",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "target-dir": "Realestate/MssqlBundle",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/intellectsoft-uk/MssqlBundle.git",
-            "reference": "98a020cd39f8bfc1282e734c7c5038e129411981"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/intellectsoft-uk/MssqlBundle/zipball/98a020cd39f8bfc1282e734c7c5038e129411981",
-            "reference": "98a020cd39f8bfc1282e734c7c5038e129411981",
-            "shasum": ""
-        },
-        "time": "2014-02-12 08:38:02",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "Realestate\\MssqlBundle": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "authors": [
-            {
-                "name": "Realestate"
-            },
-            {
-                "name": "Vitaly Zhloba",
-                "email": "vitaly.zhloba@gmail.com"
-            }
-        ],
-        "description": "Driver for work with MsSQL server"
-    },
-    {
         "name": "james-heinrich/getid3",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -814,6 +778,47 @@
             "codecs",
             "php",
             "tags"
+        ]
+    },
+    {
+        "name": "ircmaxell/password-compat",
+        "version": "1.0.3",
+        "version_normalized": "1.0.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ircmaxell/password_compat.git",
+            "reference": "1fc1521b5e9794ea77e4eca30717be9635f1d4f4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ircmaxell/password_compat/zipball/1fc1521b5e9794ea77e4eca30717be9635f1d4f4",
+            "reference": "1fc1521b5e9794ea77e4eca30717be9635f1d4f4",
+            "shasum": ""
+        },
+        "time": "2013-04-30 19:58:08",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "lib/password.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Anthony Ferrara",
+                "email": "ircmaxell@ircmaxell.com",
+                "homepage": "http://blog.ircmaxell.com"
+            }
+        ],
+        "description": "A compatibility library for the proposed simplified password hashing algorithm: https://wiki.php.net/rfc/password_hash",
+        "homepage": "https://github.com/ircmaxell/password_compat",
+        "keywords": [
+            "hashing",
+            "password"
         ]
     }
 ]
