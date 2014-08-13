@@ -1,10 +1,9 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
-        "This file is @generated automatically"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "6a5a32286b2594a8eeda466dadea2e4e",
+    "hash": "c71a6d11fd027807bde8fa78a65e4b54",
     "packages": [
         {
             "name": "guzzle/common",
@@ -205,40 +204,6 @@
             "time": "2014-01-28 22:14:17"
         },
         {
-            "name": "isoft/mssql-bundle",
-            "version": "dev-master",
-            "target-dir": "Realestate/MssqlBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/intellectsoft-uk/MssqlBundle.git",
-                "reference": "98a020cd39f8bfc1282e734c7c5038e129411981"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/intellectsoft-uk/MssqlBundle/zipball/98a020cd39f8bfc1282e734c7c5038e129411981",
-                "reference": "98a020cd39f8bfc1282e734c7c5038e129411981",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Realestate\\MssqlBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Realestate"
-                },
-                {
-                    "name": "Vitaly Zhloba",
-                    "email": "vitaly.zhloba@gmail.com"
-                }
-            ],
-            "description": "Driver for work with MsSQL server",
-            "time": "2014-02-12 08:38:02"
-        },
-        {
             "name": "james-heinrich/getid3",
             "version": "dev-master",
             "source": {
@@ -348,15 +313,51 @@
             "time": "2014-02-04 10:36:39"
         },
         {
-            "name": "mcnetic/phpzipstreamer",
-            "version": "master",
+            "name": "mcnetic/zipstreamer",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/McNetic/PHPZipStreamer.git",
-                "reference": "master"
+                "reference": "8ed588deea12f1655285630e2256f52d49456329"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/McNetic/PHPZipStreamer/zipball/8ed588deea12f1655285630e2256f52d49456329",
+                "reference": "8ed588deea12f1655285630e2256f52d49456329",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
             },
             "type": "library",
-            "time": "2014-07-11 09:09:02"
+            "autoload": {
+                "psr-4": {
+                    "ZipStreamer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolai Ehemann",
+                    "email": "en@enlightened.de",
+                    "role": "Author/Maintainer"
+                },
+                {
+                    "name": "André Rothe",
+                    "email": "arothe@zks.uni-leipzig.de",
+                    "role": "Contributor"
+                }
+            ],
+            "description": "Stream zip files without i/o overhead",
+            "homepage": "https://github.com/McNetic/PHPZipStreamer",
+            "keywords": [
+                "stream",
+                "zip"
+            ],
+            "time": "2014-07-31 14:05:41"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -795,16 +796,22 @@
             "time": "2014-02-11 13:52:09"
         }
     ],
-    "packages-dev": [],
-    "aliases": [],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "mcnetic/phpzipstreamer": 20,
+        "mcnetic/zipstreamer": 20,
         "kriswallsmith/assetic": 20,
-        "james-heinrich/getid3": 20,
-        "isoft/mssql-bundle": 20
+        "james-heinrich/getid3": 20
     },
-    "prefer-stable": false,
-    "platform": [],
-    "platform-dev": []
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
 }
