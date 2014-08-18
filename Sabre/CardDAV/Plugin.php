@@ -9,8 +9,8 @@ use Sabre\VObject;
  *
  * @package Sabre
  * @subpackage CardDAV
- * @copyright Copyright (C) 2007-2013 Rooftop Solutions. All rights reserved.
- * @author Evert Pot (http://www.rooftopsolutions.nl/)
+ * @copyright Copyright (C) 2007-2014 fruux GmbH (https://fruux.com/).
+ * @author Evert Pot (http://evertpot.com/)
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
  */
 class Sabre_CardDAV_Plugin extends Sabre_DAV_ServerPlugin {
@@ -133,7 +133,7 @@ class Sabre_CardDAV_Plugin extends Sabre_DAV_ServerPlugin {
                 $principalId = $node->getName();
                 $addressbookHomePath = self::ADDRESSBOOK_ROOT . '/' . $principalId . '/';
                 unset($requestedProperties[array_search($addHome, $requestedProperties)]);
-                $returnedProperties[200][$addHome] = new Sabre_DAV_Property_Href(Sabre_DAV_URLUtil::encodePath($addressbookHomePath));
+                $returnedProperties[200][$addHome] = new Sabre_DAV_Property_Href($addressbookHomePath);
             }
 
             $directories = '{' . self::NS_CARDDAV . '}directory-gateway';
@@ -363,7 +363,9 @@ class Sabre_CardDAV_Plugin extends Sabre_DAV_ServerPlugin {
         }
 
         if (!isset($vobj->UID)) {
-            throw new Sabre_DAV_Exception_BadRequest('Every vcard must have an UID.');
+            // No UID in vcards is invalid, but we'll just add it in anyway.
+            $vobj->add('UID', Sabre_DAV_UUIDUtil::getUUID());
+            $data = $vobj->serialize();
         }
 
     }
@@ -478,7 +480,7 @@ class Sabre_CardDAV_Plugin extends Sabre_DAV_ServerPlugin {
                 if ($filter['text-matches']) {
                     $texts = array();
                     foreach($vProperties as $vProperty)
-                        $texts[] = $vProperty->value;
+                        $texts[] = $vProperty->getValue();
 
                     $results[] = $this->validateTextMatches($texts, $filter['text-matches'], $filter['test']);
                 }
@@ -554,7 +556,7 @@ class Sabre_CardDAV_Plugin extends Sabre_DAV_ServerPlugin {
                 foreach($vProperties as $vProperty) {
                     // If we got all the way here, we'll need to validate the
                     // text-match filter.
-                    $success = Sabre_DAV_StringUtil::textMatch($vProperty[$filter['name']]->value, $filter['text-match']['value'], $filter['text-match']['collation'], $filter['text-match']['match-type']);
+                    $success = Sabre_DAV_StringUtil::textMatch($vProperty[$filter['name']]->getValue(), $filter['text-match']['value'], $filter['text-match']['collation'], $filter['text-match']['match-type']);
                     if ($success) break;
                 }
                 if ($filter['text-match']['negate-condition']) {

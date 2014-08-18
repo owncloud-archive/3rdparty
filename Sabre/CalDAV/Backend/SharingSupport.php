@@ -155,8 +155,8 @@
  * ==============================================
  *
  * If Sabre_CalDAV_Property_AllowedSharingModes is returned from
- * getCalendarsByUser, this allows the server to specify wether either sharing,
- * or publishing is supported.
+ * getCalendarsByUser, this allows the server to specify whether either
+ * sharing, or publishing is supported.
  *
  * This allows a client to determine in advance which features are available,
  * and update the interface appropriately. If this property is not returned by
@@ -165,8 +165,8 @@
  *
  * @package Sabre
  * @subpackage CalDAV
- * @copyright Copyright (C) 2007-2013 Rooftop Solutions. All rights reserved.
- * @author Evert Pot (http://www.rooftopsolutions.nl/)
+ * @copyright Copyright (C) 2007-2014 fruux GmbH (https://fruux.com/).
+ * @author Evert Pot (http://evertpot.com/)
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
  */
 interface Sabre_CalDAV_Backend_SharingSupport extends Sabre_CalDAV_Backend_NotificationSupport {

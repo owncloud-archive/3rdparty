@@ -12,8 +12,8 @@
  *
  * @package Sabre
  * @subpackage DAV
- * @copyright Copyright (C) 2007-2013 Rooftop Solutions. All rights reserved.
- * @author Evert Pot (http://www.rooftopsolutions.nl/)
+ * @copyright Copyright (C) 2007-2014 fruux GmbH (https://fruux.com/).
+ * @author Evert Pot (http://evertpot.com/)
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
  */
 class Sabre_DAV_Locks_Plugin extends Sabre_DAV_ServerPlugin {
@@ -618,12 +618,18 @@ class Sabre_DAV_Locks_Plugin extends Sabre_DAV_ServerPlugin {
      * @return Sabre_DAV_Locks_LockInfo
      */
     protected function parseLockRequest($body) {
-		$loadEntities = libxml_disable_entity_loader(true);
+
+        // Fixes an XXE vulnerability on PHP versions older than 5.3.23 or
+        // 5.4.13.
+        $previous = libxml_disable_entity_loader(true);
+
+
         $xml = simplexml_load_string(
             Sabre_DAV_XMLUtil::convertDAVNamespace($body),
             null,
             LIBXML_NOWARNING);
-		libxml_disable_entity_loader($loadEntities);
+        libxml_disable_entity_loader($previous);
+
         $xml->registerXPathNamespace('d','urn:DAV');
         $lockInfo = new Sabre_DAV_Locks_LockInfo();
 

@@ -10,8 +10,8 @@
  *
  * @package Sabre
  * @subpackage DAVClient
- * @copyright Copyright (C) 2007-2013 Rooftop Solutions. All rights reserved.
- * @author Evert Pot (http://www.rooftopsolutions.nl/)
+ * @copyright Copyright (C) 2007-2014 fruux GmbH (https://fruux.com/).
+ * @author Evert Pot (http://evertpot.com/)
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
  */
 class Sabre_DAV_Client {
@@ -63,7 +63,7 @@ class Sabre_DAV_Client {
      *
      * @var boolean
      */
-    private $verifyPeer;
+    protected $verifyPeer;
 
     /**
      * Constructor
@@ -314,6 +314,7 @@ class Sabre_DAV_Client {
             CURLOPT_RETURNTRANSFER => true,
             // Return headers as part of the response
             CURLOPT_HEADER => true,
+
             // For security we cast this to a string. If somehow an array could
             // be passed here, it would be possible for an attacker to use @ to
             // post local files.
@@ -529,9 +530,12 @@ class Sabre_DAV_Client {
 
         $body = Sabre_DAV_XMLUtil::convertDAVNamespace($body);
 
-		$loadEntities = libxml_disable_entity_loader(true);
+        // Fixes an XXE vulnerability on PHP versions older than 5.3.23 or
+        // 5.4.13.
+        $previous = libxml_disable_entity_loader(true);
         $responseXML = simplexml_load_string($body, null, LIBXML_NOBLANKS | LIBXML_NOCDATA);
-		libxml_disable_entity_loader($loadEntities);
+        libxml_disable_entity_loader($previous);
+
         if ($responseXML===false) {
             throw new InvalidArgumentException('The passed data is not valid XML');
         }
@@ -553,7 +557,10 @@ class Sabre_DAV_Client {
                 $status = $propStat->xpath('d:status');
                 list($httpVersion, $statusCode, $message) = explode(' ', (string)$status[0],3);
 
-                $properties[$statusCode] = Sabre_DAV_XMLUtil::parseProperties(dom_import_simplexml($propStat), $this->propertyMap);
+                // Only using the propertymap for results with status 200.
+                $propertyMap = $statusCode==='200' ? $this->propertyMap : array();
+
+                $properties[$statusCode] = Sabre_DAV_XMLUtil::parseProperties(dom_import_simplexml($propStat), $propertyMap);
 
             }
 

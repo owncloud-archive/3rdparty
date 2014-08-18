@@ -11,8 +11,8 @@ use Sabre\VObject;
  *
  * @package Sabre
  * @subpackage CalDAV
- * @copyright Copyright (C) 2007-2013 Rooftop Solutions. All rights reserved.
- * @author Evert Pot (http://www.rooftopsolutions.nl/)
+ * @copyright Copyright (C) 2007-2014 fruux GmbH (https://fruux.com/).
+ * @author Evert Pot (http://evertpot.com/)
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
  */
 class Sabre_CalDAV_ICSExportPlugin extends Sabre_DAV_ServerPlugin {
@@ -84,7 +84,7 @@ class Sabre_CalDAV_ICSExportPlugin extends Sabre_DAV_ServerPlugin {
      */
     public function generateICS(array $nodes) {
 
-        $calendar = new VObject\Component('vcalendar');
+        $calendar = new VObject\Component\VCalendar();
         $calendar->version = '2.0';
         if (Sabre_DAV_Server::$exposeVersion) {
             $calendar->prodid = '-//SabreDAV//SabreDAV ' . Sabre_DAV_Version::VERSION . '//EN';

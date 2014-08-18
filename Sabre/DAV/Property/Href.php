@@ -8,8 +8,8 @@
  *
  * @package Sabre
  * @subpackage DAV
- * @copyright Copyright (C) 2007-2013 Rooftop Solutions. All rights reserved.
- * @author Evert Pot (http://www.rooftopsolutions.nl/)
+ * @copyright Copyright (C) 2007-2014 fruux GmbH (https://fruux.com/).
+ * @author Evert Pot (http://evertpot.com/)
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
  */
 class Sabre_DAV_Property_Href extends Sabre_DAV_Property implements Sabre_DAV_Property_IHref {
@@ -64,9 +64,15 @@ class Sabre_DAV_Property_Href extends Sabre_DAV_Property implements Sabre_DAV_Pr
     public function serialize(Sabre_DAV_Server $server, DOMElement $dom) {
 
         $prefix = $server->xmlNamespaces['DAV:'];
-
         $elem = $dom->ownerDocument->createElement($prefix . ':href');
-        $elem->nodeValue = ($this->autoPrefix?$server->getBaseUri():'') . $this->href;
+
+        if ($this->autoPrefix) {
+            $value = $server->getBaseUri() . Sabre_DAV_URLUtil::encodePath($this->href);
+        } else {
+            $value = $this->href;
+        }
+        $elem->appendChild($dom->ownerDocument->createTextNode($value));
+
         $dom->appendChild($elem);
 
     }
