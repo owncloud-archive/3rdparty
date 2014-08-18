@@ -1770,7 +1770,7 @@ class Server {
         }
         $this->tree->markDirty($parentUri);
         $this->broadcastEvent('afterBind',array($uri));
-
+        $this->broadcastEvent('afterCreateCollection',array($uri, $parent));
     }
 
     /**
