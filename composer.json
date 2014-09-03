@@ -27,6 +27,7 @@
 		"phpseclib/phpseclib": "*",
 		"rackspace/php-opencloud": "v1.9.2",
 		"james-heinrich/getid3": "dev-master",
-		"ircmaxell/random-lib": "v1.0.0"
+		"ircmaxell/random-lib": "v1.0.0",
+		"zendframework/zendxml": "1.0.0"
 	}
 }
