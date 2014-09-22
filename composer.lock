@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6a5a32286b2594a8eeda466dadea2e4e",
+    "hash": "5b495d7d047403e5ef2eca8de3816c05",
     "packages": [
         {
             "name": "guzzle/common",
@@ -205,51 +205,17 @@
             "time": "2014-01-28 22:14:17"
         },
         {
-            "name": "isoft/mssql-bundle",
-            "version": "dev-master",
-            "target-dir": "Realestate/MssqlBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/intellectsoft-uk/MssqlBundle.git",
-                "reference": "98a020cd39f8bfc1282e734c7c5038e129411981"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/intellectsoft-uk/MssqlBundle/zipball/98a020cd39f8bfc1282e734c7c5038e129411981",
-                "reference": "98a020cd39f8bfc1282e734c7c5038e129411981",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Realestate\\MssqlBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Realestate"
-                },
-                {
-                    "name": "Vitaly Zhloba",
-                    "email": "vitaly.zhloba@gmail.com"
-                }
-            ],
-            "description": "Driver for work with MsSQL server",
-            "time": "2014-02-12 08:38:02"
-        },
-        {
             "name": "james-heinrich/getid3",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JamesHeinrich/getID3.git",
-                "reference": "8a6a9b9dcae8eaea8b225f13726cc456dfeb20e7"
+                "reference": "afbdaa044a9a0a9dff2f800bd670e231b3ec99b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/8a6a9b9dcae8eaea8b225f13726cc456dfeb20e7",
-                "reference": "8a6a9b9dcae8eaea8b225f13726cc456dfeb20e7",
+                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/afbdaa044a9a0a9dff2f800bd670e231b3ec99b2",
+                "reference": "afbdaa044a9a0a9dff2f800bd670e231b3ec99b2",
                 "shasum": ""
             },
             "require": {
@@ -272,7 +238,7 @@
                 "php",
                 "tags"
             ],
-            "time": "2014-07-26 21:46:14"
+            "time": "2014-09-14 18:13:30"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -356,7 +322,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-07-11 09:09:02"
+            "time": "2014-09-17 13:32:18"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -801,8 +767,7 @@
     "stability-flags": {
         "mcnetic/phpzipstreamer": 20,
         "kriswallsmith/assetic": 20,
-        "james-heinrich/getid3": 20,
-        "isoft/mssql-bundle": 20
+        "james-heinrich/getid3": 20
     },
     "prefer-stable": false,
     "platform": [],
