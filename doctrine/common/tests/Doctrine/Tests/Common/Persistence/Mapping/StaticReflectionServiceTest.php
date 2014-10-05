@@ -13,7 +13,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * This software consists of voluntary contributions made by many individuals
- * and is licensed under the LGPL. For more information, see
+ * and is licensed under the MIT license. For more information, see
  * <http://www.doctrine-project.org>.
  */
 
@@ -58,7 +58,7 @@ class StaticReflectionServiceTest extends \PHPUnit_Framework_TestCase
     public function testGetMethods()
     {
         $this->assertTrue($this->reflectionService->hasPublicMethod(__CLASS__, "testGetMethods"));
-        $this->assertFalse($this->reflectionService->hasPublicMethod(__CLASS__, "testGetMethods2"));
+        $this->assertTrue($this->reflectionService->hasPublicMethod(__CLASS__, "testGetMethods2"));
     }
 
     public function testGetAccessibleProperty()
@@ -67,3 +67,4 @@ class StaticReflectionServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($reflProp);
     }
 }
+
