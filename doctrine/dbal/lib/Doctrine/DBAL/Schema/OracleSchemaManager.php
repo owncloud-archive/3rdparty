@@ -354,4 +354,19 @@ class OracleSchemaManager extends AbstractSchemaManager
 
         return $identifier;
     }
+
+	/**
+	 * Returns true if all the given tables exist.
+	 *
+	 * @param array $tableNames
+	 *
+	 * @return boolean
+	 */
+	public function tablesExist($tableNames)
+	{
+		$tableNames = array_map('strtolower', (array)$tableNames);
+		$tableNames = array_map(array($this, 'getQuotedIdentifierName'), $tableNames);
+
+		return count($tableNames) == count(\array_intersect($tableNames, array_map('strtolower', $this->listTableNames())));
+	}
 }
