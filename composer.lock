@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bc4a7bb25e438a7a6f20b0e4af7c938d",
+    "hash": "ce4ea743a58bd8f5771351993e9cea74",
     "packages": [
         {
             "name": "bantu/ini-get-wrapper",
@@ -958,52 +958,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-04-04 10:55:12"
-        },
-        {
-            "name": "mrclay/minify",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mrclay/minify.git",
-                "reference": "bd9a450694cda1b54c43a1784adabe36ad522d89"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mrclay/minify/zipball/bd9a450694cda1b54c43a1784adabe36ad522d89",
-                "reference": "bd9a450694cda1b54c43a1784adabe36ad522d89",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pcre": "*",
-                "php": ">=5.2.1"
-            },
-            "require-dev": {
-                "tubalmartin/cssmin": "~2.4.8"
-            },
-            "suggest": {
-                "tubalmartin/cssmin": "Support minify with CSSMin (YUI PHP port)"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "min/lib/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Stephen Clay",
-                    "email": "steve@mrclay.org",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Minify is a PHP5 app that helps you follow several rules for client-side performance. It combines multiple CSS or Javascript files, removes unnecessary whitespace and comments, and serves them with gzip encoding and optimal client-side cache headers",
-            "homepage": "http://code.google.com/p/minify/",
-            "time": "2014-09-25 11:40:53"
+            "time": "2015-01-01 13:17:44"
         },
         {
             "name": "natxet/CssMin",
@@ -1890,6 +1845,52 @@
                 "url"
             ],
             "time": "2014-10-24 05:49:22"
+        },
+        {
+            "name": "tedivm/jshrink",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tedious/JShrink.git",
+                "reference": "7575d9d96f113bc7c1c28ec8231ee086751a9078"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tedious/JShrink/zipball/7575d9d96f113bc7c1c28ec8231ee086751a9078",
+                "reference": "7575d9d96f113bc7c1c28ec8231ee086751a9078",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "0.4.0",
+                "phpunit/phpunit": "4.0.*",
+                "satooshi/php-coveralls": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "JShrink": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Robert Hafner",
+                    "email": "tedivm@tedivm.com"
+                }
+            ],
+            "description": "Javascript Minifier built in PHP",
+            "homepage": "http://github.com/tedious/JShrink",
+            "keywords": [
+                "javascript",
+                "minifier"
+            ],
+            "time": "2014-11-11 03:54:14"
         }
     ],
     "packages-dev": [],
@@ -1900,7 +1901,6 @@
         "kriswallsmith/assetic": 20,
         "james-heinrich/getid3": 20,
         "natxet/cssmin": 20,
-        "mrclay/minify": 20,
         "pear/pear_exception": 20
     },
     "prefer-stable": false,
