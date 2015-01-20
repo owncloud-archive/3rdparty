@@ -1880,17 +1880,17 @@
     },
     {
         "name": "doctrine/dbal",
-        "version": "v2.5.0",
-        "version_normalized": "2.5.0.0",
+        "version": "v2.5.1",
+        "version_normalized": "2.5.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/doctrine/dbal.git",
-            "reference": "71140662c0a954602e81271667b6e03d9f53ea34"
+            "reference": "628c2256b646ae2417d44e063bce8aec5199d48d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/doctrine/dbal/zipball/71140662c0a954602e81271667b6e03d9f53ea34",
-            "reference": "71140662c0a954602e81271667b6e03d9f53ea34",
+            "url": "https://api.github.com/repos/doctrine/dbal/zipball/628c2256b646ae2417d44e063bce8aec5199d48d",
+            "reference": "628c2256b646ae2417d44e063bce8aec5199d48d",
             "shasum": ""
         },
         "require": {
@@ -1904,7 +1904,7 @@
         "suggest": {
             "symfony/console": "For helpful console commands such as SQL execution and import of files."
         },
-        "time": "2014-12-04 21:57:15",
+        "time": "2015-01-12 21:52:47",
         "bin": [
             "bin/doctrine-dbal"
         ],
