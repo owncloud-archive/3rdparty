@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f081d428c1941871a57782c92d01287d",
+    "hash": "220117b5433adb9f2c1ab00c19e1d2e7",
     "packages": [
         {
             "name": "bantu/ini-get-wrapper",
@@ -748,16 +748,16 @@
         },
         {
             "name": "ircmaxell/random-lib",
-            "version": "v1.0.0",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ircmaxell/RandomLib.git",
-                "reference": "0eaad991c1756842f26dfbcbc6effcabb5003d0a"
+                "reference": "13efa4368bb2ac88bb3b1459b487d907de4dbf7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ircmaxell/RandomLib/zipball/0eaad991c1756842f26dfbcbc6effcabb5003d0a",
-                "reference": "0eaad991c1756842f26dfbcbc6effcabb5003d0a",
+                "url": "https://api.github.com/repos/ircmaxell/RandomLib/zipball/13efa4368bb2ac88bb3b1459b487d907de4dbf7c",
+                "reference": "13efa4368bb2ac88bb3b1459b487d907de4dbf7c",
                 "shasum": ""
             },
             "require": {
@@ -765,7 +765,8 @@
                 "php": ">=5.3.2"
             },
             "require-dev": {
-                "mikey179/vfsstream": "1.1.*"
+                "mikey179/vfsstream": "1.1.*",
+                "phpunit/phpunit": "3.7.*"
             },
             "type": "library",
             "extra": {
@@ -790,14 +791,14 @@
                 }
             ],
             "description": "A Library For Generating Secure Random Numbers",
-            "homepage": "https://github.com/ircmaxell/PHP-RandomLib",
+            "homepage": "https://github.com/ircmaxell/RandomLib",
             "keywords": [
                 "cryptography",
                 "random",
                 "random-numbers",
                 "random-strings"
             ],
-            "time": "2013-07-30 17:40:57"
+            "time": "2015-01-15 16:31:45"
         },
         {
             "name": "ircmaxell/security-lib",
@@ -958,7 +959,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2015-01-01 13:17:44"
+            "time": "2015-02-04 10:44:57"
         },
         {
             "name": "mrclay/minify",
