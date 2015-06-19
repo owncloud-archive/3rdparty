@@ -110,7 +110,8 @@ class Server extends EventEmitter {
         // RFC4918
         '{DAV:}getcontentlength',
         '{DAV:}getetag',
-        '{DAV:}getlastmodified',
+        //Break RFC4918
+        //'{DAV:}getlastmodified',
         '{DAV:}lockdiscovery',
         '{DAV:}supportedlock',
 
