@@ -20,6 +20,8 @@ doctrine/dbal/docs
 doctrine/dbal/run-all.sh
 doctrine/dbal/.travis.yml
 doctrine/inflector/tests
+doctrine/migrations/tests
+doctrine/migrations/.travis.yml
 
 pear/archive_tar/.travis.sh
 pear/archive_tar/.travis.yml
