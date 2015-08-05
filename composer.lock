@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ade70d01cf1d47366503d0e21660c048",
+    "hash": "1b1ebdde45f2851d36dcf7a8b2bb3b34",
     "packages": [
         {
             "name": "bantu/ini-get-wrapper",
@@ -1300,7 +1300,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2015-08-03 07:32:27"
+            "time": "2015-07-22 10:16:07"
         },
         {
             "name": "mrclay/minify",
@@ -1706,16 +1706,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "2.0.x-dev",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "772d4df5975a721d9c2cc79ca4da1339798c2c86"
+                "reference": "a74aa9efbe61430fcb60157c8e025a48ec8ff604"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/772d4df5975a721d9c2cc79ca4da1339798c2c86",
-                "reference": "772d4df5975a721d9c2cc79ca4da1339798c2c86",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/a74aa9efbe61430fcb60157c8e025a48ec8ff604",
+                "reference": "a74aa9efbe61430fcb60157c8e025a48ec8ff604",
                 "shasum": ""
             },
             "require": {
@@ -1730,7 +1730,9 @@
             "suggest": {
                 "ext-gmp": "Install the GMP (GNU Multiple Precision) extension in order to speed up arbitrary precision integer arithmetic operations.",
                 "ext-libsodium": "SSH2/SFTP can make use of some algorithms provided by the libsodium-php extension.",
-                "ext-mcrypt": "Install the Mcrypt extension in order to speed up a wide variety of cryptographic operations."
+                "ext-mcrypt": "Install the Mcrypt extension in order to speed up a few other cryptographic operations.",
+                "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations.",
+                "pear-pear/PHP_Compat": "Install PHP_Compat to get phpseclib working on PHP < 5.0.0."
             },
             "type": "library",
             "autoload": {
@@ -1788,7 +1790,7 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2015-07-28 23:09:20"
+            "time": "2015-08-04 04:48:03"
         },
         {
             "name": "pimple/pimple",
@@ -2530,7 +2532,6 @@
     "stability-flags": {
         "mcnetic/phpzipstreamer": 20,
         "kriswallsmith/assetic": 20,
-        "phpseclib/phpseclib": 20,
         "james-heinrich/getid3": 20,
         "natxet/cssmin": 20,
         "mrclay/minify": 20,
