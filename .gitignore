@@ -3,9 +3,6 @@ bin
 # ignore demo files
 james-heinrich/getid3/demos
 james-heinrich/getid3/helperapps
-mrclay/minify/min_unit_tests
-mrclay/minify/min_extras
-mrclay/minify/min/builder
 
 doctrine/annotations/tests
 doctrine/annotations/.travis.yml
@@ -138,3 +135,6 @@ nikic/php-parser/bin/
 nikic/php-parser/doc/
 nikic/php-parser/test/
 nikic/php-parser/test_old/
+
+patchwork/jsqueeze/tests
+patchwork/jsqueeze/phpunit.xml.dist

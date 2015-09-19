@@ -17,7 +17,6 @@
 		"ircmaxell/random-lib": "~1.1",
 		"bantu/ini-get-wrapper": "v1.0.1",
 		"natxet/CssMin": "dev-master",
-		"mrclay/minify": "dev-master",
 		"punic/punic": "1.1.0",
 		"pear/archive_tar": "~1.4",
 		"patchwork/utf8": "~1.1",
@@ -32,6 +31,7 @@
 		"swiftmailer/swiftmailer": "@stable",
 		"guzzlehttp/guzzle": "~5.0",
 		"league/flysystem": "1.0.4",
-		"pear/pear-core-minimal": "v1.10.0alpha2"
+		"pear/pear-core-minimal": "v1.10.0alpha2",
+		"patchwork/jsqueeze": "^2.0"
 	}
 }
