@@ -1,0 +1,16 @@
+{
+	"name": "deepdiver1975/tarstreamer",
+	"type": "library",
+	"description": "A library for dynamically streaming dynamic tar  files without the need to have the complete file stored on the server.",
+	"keywords": ["tar", "archive", "stream", "php"],
+	"homepage": "https://github.com/DeepDiver1975/TarStreamer",
+	"license": "MIT",
+	"require": {
+		"php": ">=5.3.8"
+	},
+	"autoload": {
+		"psr-4": {
+			"DeepDiver1975\\TarStreamer\\": "src/"
+		}
+	}
+}

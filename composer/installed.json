@@ -2692,5 +2692,46 @@
             "log",
             "normalizer"
         ]
+    },
+    {
+        "name": "deepdiver1975/tarstreamer",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/VicDeo/TarStreamer.git",
+            "reference": "0311a060f34bea3ff1f27ada4f34791885678c94"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/VicDeo/TarStreamer/zipball/0311a060f34bea3ff1f27ada4f34791885678c94",
+            "reference": "0311a060f34bea3ff1f27ada4f34791885678c94",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.8"
+        },
+        "time": "2015-09-24 17:05:22",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "DeepDiver1975\\TarStreamer\\": "src/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "description": "A library for dynamically streaming dynamic tar  files without the need to have the complete file stored on the server.",
+        "homepage": "https://github.com/DeepDiver1975/TarStreamer",
+        "keywords": [
+            "archive",
+            "php",
+            "stream",
+            "tar"
+        ],
+        "support": {
+            "source": "https://github.com/VicDeo/TarStreamer/tree/master"
+        }
     }
 ]
