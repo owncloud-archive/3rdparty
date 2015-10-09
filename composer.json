@@ -5,24 +5,9 @@
 	"config": {
 		"vendor-dir": "."
 	},
-	"repositories": [
-		{
-			"type":"package",
-			"package": {
-				"name": "mcnetic/phpzipstreamer",
-				"version":"master",
-				"source": {
-					"url": "https://github.com/McNetic/PHPZipStreamer.git",
-					"type": "git",
-					"reference":"master"
-				}
-			}
-		}
-	],
 	"require": {
 		"sabre/dav" : "2.1.6",
 		"doctrine/dbal": "2.5.1",
-		"mcnetic/phpzipstreamer": "dev-master",
 		"kriswallsmith/assetic": "1.2.*@dev",
 		"phpseclib/phpseclib": "~0.3",
 		"rackspace/php-opencloud": "v1.9.2",
@@ -45,6 +30,8 @@
 		"nikic/php-parser": "~1.1",
 		"icewind/Streams": "0.2.0",
 		"swiftmailer/swiftmailer": "@stable",
-		"guzzlehttp/guzzle": "~5.0"
+		"guzzlehttp/guzzle": "~5.0",
+		"deepdiver1975/TarStreamer": "v0.1-beta3",
+		"mcnetic/zipstreamer": "^0.7.0"
 	}
 }

@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e45c50c296cf04631cf48383edd0166e",
+    "hash": "5720520a17a63dcb4bb7abdcad60cf40",
+    "content-hash": "d83a8aa07b26867ee16bb4490a8ea251",
     "packages": [
         {
             "name": "bantu/ini-get-wrapper",
@@ -35,6 +36,48 @@
             ],
             "description": "Convenience wrapper around ini_get()",
             "time": "2014-09-15 13:12:35"
+        },
+        {
+            "name": "deepdiver1975/tarstreamer",
+            "version": "v0.1-beta3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/owncloud/TarStreamer.git",
+                "reference": "07b940c68382cbfbf3a42e1de307ef6b53d5d515"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/owncloud/TarStreamer/zipball/07b940c68382cbfbf3a42e1de307ef6b53d5d515",
+                "reference": "07b940c68382cbfbf3a42e1de307ef6b53d5d515",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.8"
+            },
+            "require-dev": {
+                "pear/archive_tar": "~1.4",
+                "pear/pear-core-minimal": "v1.10.0alpha2",
+                "phpunit/phpunit": "^4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ownCloud\\TarStreamer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A library for dynamically streaming dynamic tar files without the need to have the complete file stored on the server.",
+            "homepage": "https://github.com/owncloud/TarStreamer",
+            "keywords": [
+                "archive",
+                "php",
+                "stream",
+                "tar"
+            ],
+            "time": "2015-09-28 09:43:53"
         },
         {
             "name": "doctrine/annotations",
@@ -1050,7 +1093,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/730e81152e827118a5e5b875d169a89785aa7596",
+                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/df7f782133e36da9345fd4d6ee639753831021fd",
                 "reference": "afbdaa044a9a0a9dff2f800bd670e231b3ec99b2",
                 "shasum": ""
             },
@@ -1208,15 +1251,51 @@
             "time": "2014-02-04 10:36:39"
         },
         {
-            "name": "mcnetic/phpzipstreamer",
-            "version": "master",
+            "name": "mcnetic/zipstreamer",
+            "version": "v0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/McNetic/PHPZipStreamer.git",
-                "reference": "master"
+                "reference": "44c99c659abf4dac92882437c1da68de824ca9d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/McNetic/PHPZipStreamer/zipball/44c99c659abf4dac92882437c1da68de824ca9d0",
+                "reference": "44c99c659abf4dac92882437c1da68de824ca9d0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
             },
             "type": "library",
-            "time": "2015-07-17 20:55:32"
+            "autoload": {
+                "psr-4": {
+                    "ZipStreamer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolai Ehemann",
+                    "email": "en@enlightened.de",
+                    "role": "Author/Maintainer"
+                },
+                {
+                    "name": "André Rothe",
+                    "email": "arothe@zks.uni-leipzig.de",
+                    "role": "Contributor"
+                }
+            ],
+            "description": "Stream zip files without i/o overhead",
+            "homepage": "https://github.com/McNetic/PHPZipStreamer",
+            "keywords": [
+                "stream",
+                "zip"
+            ],
+            "time": "2015-08-26 13:48:01"
         },
         {
             "name": "mrclay/minify",
@@ -1228,7 +1307,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mrclay/minify/zipball/cabd595a5aebf87e5d229814564aa3b466908be1",
+                "url": "https://api.github.com/repos/mrclay/minify/zipball/3a3354aec6d4d0d0588b0e5f7a53f6eb5e727fea",
                 "reference": "bd9a450694cda1b54c43a1784adabe36ad522d89",
                 "shasum": ""
             },
@@ -1273,7 +1352,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/natxet/CssMin/zipball/4026975145f645a77e087a26e7b0a1c9209b0191",
+                "url": "https://api.github.com/repos/natxet/CssMin/zipball/92de3fe3ccb4f8298d31952490ef7d5395855c39",
                 "reference": "003920e783c568c2d8fdf03999eebefb8479092a",
                 "shasum": ""
             },
@@ -2131,12 +2210,12 @@
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Console.git",
+                "url": "https://github.com/symfony/console.git",
                 "reference": "e44154bfe3e41e8267d7a3794cd9da9a51cfac34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/e44154bfe3e41e8267d7a3794cd9da9a51cfac34",
+                "url": "https://api.github.com/repos/symfony/console/zipball/e44154bfe3e41e8267d7a3794cd9da9a51cfac34",
                 "reference": "e44154bfe3e41e8267d7a3794cd9da9a51cfac34",
                 "shasum": ""
             },
@@ -2188,12 +2267,12 @@
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/EventDispatcher.git",
+                "url": "https://github.com/symfony/event-dispatcher.git",
                 "reference": "f75989f3ab2743a82fe0b03ded2598a2b1546813"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/f75989f3ab2743a82fe0b03ded2598a2b1546813",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/f75989f3ab2743a82fe0b03ded2598a2b1546813",
                 "reference": "f75989f3ab2743a82fe0b03ded2598a2b1546813",
                 "shasum": ""
             },
@@ -2360,13 +2439,13 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "mcnetic/phpzipstreamer": 20,
         "kriswallsmith/assetic": 20,
         "james-heinrich/getid3": 20,
         "natxet/cssmin": 20,
         "mrclay/minify": 20,
         "pear/pear_exception": 20,
-        "swiftmailer/swiftmailer": 0
+        "swiftmailer/swiftmailer": 0,
+        "deepdiver1975/tarstreamer": 10
     },
     "prefer-stable": false,
     "prefer-lowest": false,

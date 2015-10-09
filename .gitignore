@@ -129,3 +129,6 @@ react/CHANGELOG.md
 react/composer.json
 react/phpunit.xml.dist
 react/README.md
+
+mcnetic/zipstreamer/test
+deepdiver1975/tarstreamer/tests
