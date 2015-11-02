@@ -166,3 +166,8 @@ patchwork/jsqueeze/phpunit.xml.dist
 sabre/dav/examples
 sabre/dav/tests
 
+rackspace/php-opencloud/tests/
+rackspace/php-opencloud/docs/
+rackspace/php-opencloud/samples/
+rackspace/php-opencloud/doc/
+rackspace/php-opencloud/apigen.neon
