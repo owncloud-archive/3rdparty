@@ -583,6 +583,11 @@ class Plugin extends DAV\ServerPlugin {
                 // should have set depth to 1. We're implementing a workaround here
                 // to deal with this.
                 $depth = 1;
+            } else if (strpos($this->server->httpRequest->getHeader('User-Agent'), 'MSFT-WIN') === 0) {
+                // Windows 10 (Calendar & Mail app) since build 1511 Update also incorrectly
+                // supplies depth as 0, when it actually should have set depth to 1.
+                // We're implementing a workaround here to deal with this.
+                $depth = 1;
             } else {
                 throw new BadRequest('A calendar-query REPORT on a calendar with a Depth: 0 is undefined. Set Depth to 1');
             }
