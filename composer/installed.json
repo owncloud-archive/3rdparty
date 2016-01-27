@@ -350,7 +350,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/df7f782133e36da9345fd4d6ee639753831021fd",
+            "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/087b7270a6cff16f32a66bcb6af58866ad19dd07",
             "reference": "afbdaa044a9a0a9dff2f800bd670e231b3ec99b2",
             "shasum": ""
         },
@@ -388,7 +388,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/natxet/CssMin/zipball/92de3fe3ccb4f8298d31952490ef7d5395855c39",
+            "url": "https://api.github.com/repos/natxet/CssMin/zipball/0b2170454eed9024c7e26b036fbccf2d7f6f2c53",
             "reference": "003920e783c568c2d8fdf03999eebefb8479092a",
             "shasum": ""
         },
@@ -1126,12 +1126,12 @@
         "target-dir": "Symfony/Component/Routing",
         "source": {
             "type": "git",
-            "url": "https://github.com/symfony/Routing.git",
+            "url": "https://github.com/symfony/routing.git",
             "reference": "bda1c3c67f2a33bbeabb1d321feaf626a0ca5698"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/Routing/zipball/bda1c3c67f2a33bbeabb1d321feaf626a0ca5698",
+            "url": "https://api.github.com/repos/symfony/routing/zipball/bda1c3c67f2a33bbeabb1d321feaf626a0ca5698",
             "reference": "bda1c3c67f2a33bbeabb1d321feaf626a0ca5698",
             "shasum": ""
         },
@@ -1707,7 +1707,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/96dd14fd6f3b900f0134ff430e6d119a0fa0ffc9",
+            "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/bdc28b94535d24207089c0016ca9083be8bbbb4c",
             "reference": "772d4df5975a721d9c2cc79ca4da1339798c2c86",
             "shasum": ""
         },
@@ -2499,82 +2499,6 @@
         ]
     },
     {
-        "name": "sabre/dav",
-        "version": "2.1.7",
-        "version_normalized": "2.1.7.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/fruux/sabre-dav.git",
-            "reference": "49a666925986af425626f223c30b855967e6a830"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/fruux/sabre-dav/zipball/49a666925986af425626f223c30b855967e6a830",
-            "reference": "49a666925986af425626f223c30b855967e6a830",
-            "shasum": ""
-        },
-        "require": {
-            "ext-ctype": "*",
-            "ext-date": "*",
-            "ext-dom": "*",
-            "ext-iconv": "*",
-            "ext-libxml": "*",
-            "ext-mbstring": "*",
-            "ext-pcre": "*",
-            "ext-simplexml": "*",
-            "ext-spl": "*",
-            "php": ">=5.4.1",
-            "sabre/event": "~2.0.0",
-            "sabre/http": "~3.0.0",
-            "sabre/vobject": ">=3.3.4 <4"
-        },
-        "require-dev": {
-            "evert/phpdoc-md": "~0.1.0",
-            "phpunit/phpunit": "~4.2",
-            "squizlabs/php_codesniffer": "~1.5.3"
-        },
-        "suggest": {
-            "ext-curl": "*",
-            "ext-pdo": "*"
-        },
-        "time": "2015-09-04 22:20:39",
-        "bin": [
-            "bin/sabredav",
-            "bin/naturalselection"
-        ],
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Sabre\\DAV\\": "lib/DAV/",
-                "Sabre\\DAVACL\\": "lib/DAVACL/",
-                "Sabre\\CalDAV\\": "lib/CalDAV/",
-                "Sabre\\CardDAV\\": "lib/CardDAV/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Evert Pot",
-                "email": "me@evertpot.com",
-                "homepage": "http://evertpot.com/",
-                "role": "Developer"
-            }
-        ],
-        "description": "WebDAV Framework for PHP",
-        "homepage": "http://sabre.io/",
-        "keywords": [
-            "CalDAV",
-            "CardDAV",
-            "WebDAV",
-            "framework",
-            "iCalendar"
-        ]
-    },
-    {
         "name": "sabre/event",
         "version": "2.0.2",
         "version_normalized": "2.0.2.0",
@@ -2682,17 +2606,17 @@
     },
     {
         "name": "sabre/vobject",
-        "version": "3.4.7",
-        "version_normalized": "3.4.7.0",
+        "version": "3.5.0",
+        "version_normalized": "3.5.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/fruux/sabre-vobject.git",
-            "reference": "7b3690545451159fc608dfac6696110f6770ff5d"
+            "reference": "061dd47ce40074bf63da8e3d6dbe7f18b5a4f3a4"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/fruux/sabre-vobject/zipball/7b3690545451159fc608dfac6696110f6770ff5d",
-            "reference": "7b3690545451159fc608dfac6696110f6770ff5d",
+            "url": "https://api.github.com/repos/fruux/sabre-vobject/zipball/061dd47ce40074bf63da8e3d6dbe7f18b5a4f3a4",
+            "reference": "061dd47ce40074bf63da8e3d6dbe7f18b5a4f3a4",
             "shasum": ""
         },
         "require": {
@@ -2703,7 +2627,7 @@
             "phpunit/phpunit": "*",
             "squizlabs/php_codesniffer": "*"
         },
-        "time": "2015-09-04 15:17:58",
+        "time": "2016-01-11 18:13:23",
         "bin": [
             "bin/vobject",
             "bin/generate_vcards"
@@ -2746,6 +2670,82 @@
             "jCal",
             "jCard",
             "vCard"
+        ]
+    },
+    {
+        "name": "sabre/dav",
+        "version": "2.1.9",
+        "version_normalized": "2.1.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/fruux/sabre-dav.git",
+            "reference": "ee2d454758543cc77f2fa94ca849cc1e1f3fcb7c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/fruux/sabre-dav/zipball/ee2d454758543cc77f2fa94ca849cc1e1f3fcb7c",
+            "reference": "ee2d454758543cc77f2fa94ca849cc1e1f3fcb7c",
+            "shasum": ""
+        },
+        "require": {
+            "ext-ctype": "*",
+            "ext-date": "*",
+            "ext-dom": "*",
+            "ext-iconv": "*",
+            "ext-libxml": "*",
+            "ext-mbstring": "*",
+            "ext-pcre": "*",
+            "ext-simplexml": "*",
+            "ext-spl": "*",
+            "php": ">=5.4.1",
+            "sabre/event": "^2.0.0",
+            "sabre/http": "^3.0.0",
+            "sabre/vobject": "^3.3.4"
+        },
+        "require-dev": {
+            "evert/phpdoc-md": "~0.1.0",
+            "phpunit/phpunit": "~4.2",
+            "squizlabs/php_codesniffer": "~1.5.3"
+        },
+        "suggest": {
+            "ext-curl": "*",
+            "ext-pdo": "*"
+        },
+        "time": "2016-01-25 20:59:35",
+        "bin": [
+            "bin/sabredav",
+            "bin/naturalselection"
+        ],
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Sabre\\DAV\\": "lib/DAV/",
+                "Sabre\\DAVACL\\": "lib/DAVACL/",
+                "Sabre\\CalDAV\\": "lib/CalDAV/",
+                "Sabre\\CardDAV\\": "lib/CardDAV/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Evert Pot",
+                "email": "me@evertpot.com",
+                "homepage": "http://evertpot.com/",
+                "role": "Developer"
+            }
+        ],
+        "description": "WebDAV Framework for PHP",
+        "homepage": "http://sabre.io/",
+        "keywords": [
+            "CalDAV",
+            "CardDAV",
+            "WebDAV",
+            "framework",
+            "iCalendar"
         ]
     }
 ]
