@@ -679,6 +679,13 @@ class SMTP
             );
             return false;
         }
+        //Reject line breaks in all commands
+        if (strpos($commandstring, "\n") !== false or strpos($commandstring, "\r") !== false) {
+            $this->error = array(
+                'error' => "Command '$command' contained line breaks",
+            );
+            return false;
+        }
         $this->client_send($commandstring . self::CRLF);
 
         $reply = $this->get_lines();
