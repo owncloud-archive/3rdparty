@@ -10,7 +10,7 @@
 	"require": {
 		"doctrine/dbal": "2.5.4",
 		"mcnetic/zipstreamer": "^1.0",
-		"phpseclib/phpseclib": "2.0.0",
+		"phpseclib/phpseclib": "2.0.1",
 		"rackspace/php-opencloud": "v1.9.2",
 		"james-heinrich/getid3": "dev-master",
 		"jeremeamia/superclosure": "2.1.0",
