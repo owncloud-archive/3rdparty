@@ -27,15 +27,25 @@ class ComposerAutoloaderInit2f23f73bc0cc116b4b1eee1521aa8652
         array_push($includePaths, get_include_path());
         set_include_path(join(PATH_SEPARATOR, $includePaths));
 
-        $classMap = require __DIR__ . '/autoload_classmap.php';
-        if ($classMap) {
-            $loader->addClassMap($classMap);
+        if (PHP_VERSION_ID >= 50600) {
+            require_once __DIR__ . '/autoload_static.php';
+
+            call_user_func(\Composer\Autoload\ComposerStaticInit2f23f73bc0cc116b4b1eee1521aa8652::getInitializer($loader));
+        } else {
+            $classMap = require __DIR__ . '/autoload_classmap.php';
+            if ($classMap) {
+                $loader->addClassMap($classMap);
+            }
         }
 
         $loader->setClassMapAuthoritative(true);
         $loader->register(true);
 
-        $includeFiles = require __DIR__ . '/autoload_files.php';
+        if (PHP_VERSION_ID >= 50600) {
+            $includeFiles = Composer\Autoload\ComposerStaticInit2f23f73bc0cc116b4b1eee1521aa8652::$files;
+        } else {
+            $includeFiles = require __DIR__ . '/autoload_files.php';
+        }
         foreach ($includeFiles as $fileIdentifier => $file) {
             composerRequire2f23f73bc0cc116b4b1eee1521aa8652($fileIdentifier, $file);
         }
