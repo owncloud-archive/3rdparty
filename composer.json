@@ -38,6 +38,7 @@
 		"symfony/polyfill-php70": "^1.0",
 		"symfony/polyfill-php55": "^1.0",
 		"symfony/polyfill-php56": "^1.0",
-		"lukasreschke/id3parser": "^0.0.1"
+		"lukasreschke/id3parser": "^0.0.1",
+		"zf1/zend-search-lucene": "^1.12"
 	}
 }
