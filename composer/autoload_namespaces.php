@@ -6,6 +6,10 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = $vendorDir;
 
 return array(
+    'Zend_Xml' => array($vendorDir . '/zf1/zend-xml/library'),
+    'Zend_Search_Lucene' => array($vendorDir . '/zf1/zend-search-lucene/library'),
+    'Zend_Search' => array($vendorDir . '/zf1/zend-search/library'),
+    'Zend_Exception' => array($vendorDir . '/zf1/zend-exception/library'),
     'Pimple' => array($vendorDir . '/pimple/pimple/src'),
     'PEAR' => array($vendorDir . '/pear/pear_exception'),
     'OpenCloud' => array($vendorDir . '/rackspace/php-opencloud/lib', $vendorDir . '/rackspace/php-opencloud/tests'),
