@@ -23,6 +23,15 @@ doctrine/dbal/.travis.yml
 doctrine/inflector/tests
 doctrine/lexer/composer.json
 doctrine/lexer/LICENSE
+/doctrine/migrations/bin
+/doctrine/migrations/tests
+/doctrine/migrations/phpunit.xml.dist
+/doctrine/migrations/CHANGELOG.md
+/doctrine/migrations/UPGRADE-1.0.md
+/doctrine/migrations/build-phar.sh
+/doctrine/migrations/.coveralls.yml
+/doctrine/migrations/README.md
+/doctrine/migrations/LICENSE
 
 pear/archive_tar/.travis.sh
 pear/archive_tar/.travis.yml
@@ -45,7 +54,6 @@ phpseclib/phpseclib/CHANGELOG.md
 phpseclib/phpseclib/README.md
 phpseclib/phpseclib/composer.json
 phpseclib/phpseclib/composer.lock
-phpseclib/phpseclib/phpunit.xml.dist
 
 symfony/console/Symfony/Component/Console/Tests
 symfony/console/Symfony/Component/Console/.gitignore
