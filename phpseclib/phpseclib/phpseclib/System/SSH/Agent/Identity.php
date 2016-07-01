@@ -38,32 +38,32 @@ class Identity
      *
      * @var \phpseclib\Crypt\RSA
      * @access private
-     * @see \phpseclib\System\SSH\Agent\Identity::getPublicKey()
+     * @see self::getPublicKey()
      */
     var $key;
 
     /**
      * Key Blob
      *
-     * @var String
+     * @var string
      * @access private
-     * @see \phpseclib\System\SSH\Agent\Identity::sign()
+     * @see self::sign()
      */
     var $key_blob;
 
     /**
      * Socket Resource
      *
-     * @var Resource
+     * @var resource
      * @access private
-     * @see \phpseclib\System\SSH\Agent\Identity::sign()
+     * @see self::sign()
      */
     var $fsock;
 
     /**
      * Default Constructor.
      *
-     * @param Resource $fsock
+     * @param resource $fsock
      * @return \phpseclib\System\SSH\Agent\Identity
      * @access private
      */
@@ -92,7 +92,7 @@ class Identity
      * Called by \phpseclib\System\SSH\Agent::requestIdentities(). The key blob could be extracted from $this->key
      * but this saves a small amount of computation.
      *
-     * @param String $key_blob
+     * @param string $key_blob
      * @access private
      */
     function setPublicKeyBlob($key_blob)
@@ -105,8 +105,8 @@ class Identity
      *
      * Wrapper for $this->key->getPublicKey()
      *
-     * @param Integer $format optional
-     * @return Mixed
+     * @param int $format optional
+     * @return mixed
      * @access public
      */
     function getPublicKey($format = null)
@@ -120,7 +120,7 @@ class Identity
      * Doesn't do anything as ssh-agent doesn't let you pick and choose the signature mode. ie.
      * ssh-agent's only supported mode is \phpseclib\Crypt\RSA::SIGNATURE_PKCS1
      *
-     * @param Integer $mode
+     * @param int $mode
      * @access public
      */
     function setSignatureMode($mode)
@@ -132,8 +132,8 @@ class Identity
      *
      * See "2.6.2 Protocol 2 private key signature request"
      *
-     * @param String $message
-     * @return String
+     * @param string $message
+     * @return string
      * @access public
      */
     function sign($message)
