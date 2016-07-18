@@ -2,3 +2,4 @@ Patches:
 
 - Doctrine: fix postgres column escaping when using reserved keyword: https://github.com/doctrine/dbal/pull/627
 - patchwork/utf8: Remove trigger_error() that spammed the error log
+- backported guzzlehttp/guzzle fix from 5.3.1
