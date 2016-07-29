@@ -350,7 +350,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/995da7d5e8a7ac2b5ef076c64e9be66d380ede4f",
+            "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/afbdaa044a9a0a9dff2f800bd670e231b3ec99b2",
             "reference": "afbdaa044a9a0a9dff2f800bd670e231b3ec99b2",
             "shasum": ""
         },
@@ -388,7 +388,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/natxet/CssMin/zipball/0b2170454eed9024c7e26b036fbccf2d7f6f2c53",
+            "url": "https://api.github.com/repos/natxet/CssMin/zipball/003920e783c568c2d8fdf03999eebefb8479092a",
             "reference": "003920e783c568c2d8fdf03999eebefb8479092a",
             "shasum": ""
         },
@@ -810,55 +810,6 @@
             "annotations",
             "docblock",
             "parser"
-        ]
-    },
-    {
-        "name": "patchwork/jsqueeze",
-        "version": "v2.0.3",
-        "version_normalized": "2.0.3.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/tchwork/jsqueeze.git",
-            "reference": "074a7ac403d1fae262fd662c43c04b62d71c3e50"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/tchwork/jsqueeze/zipball/074a7ac403d1fae262fd662c43c04b62d71c3e50",
-            "reference": "074a7ac403d1fae262fd662c43c04b62d71c3e50",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "time": "2015-08-20 11:07:02",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Patchwork\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "(Apache-2.0 or GPL-2.0)"
-        ],
-        "authors": [
-            {
-                "name": "Nicolas Grekas",
-                "email": "p@tchwork.com"
-            }
-        ],
-        "description": "Efficient JavaScript minification in PHP",
-        "homepage": "https://github.com/tchwork/jsqueeze",
-        "keywords": [
-            "compression",
-            "javascript",
-            "minification"
         ]
     },
     {
@@ -3242,6 +3193,55 @@
             "WebDAV",
             "framework",
             "iCalendar"
+        ]
+    },
+    {
+        "name": "patchwork/jsqueeze",
+        "version": "v2.0.5",
+        "version_normalized": "2.0.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/tchwork/jsqueeze.git",
+            "reference": "693d64850eab2ce6a7c8f7cf547e1ab46e69d542"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/tchwork/jsqueeze/zipball/693d64850eab2ce6a7c8f7cf547e1ab46e69d542",
+            "reference": "693d64850eab2ce6a7c8f7cf547e1ab46e69d542",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2016-04-19 09:28:22",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Patchwork\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "(Apache-2.0 or GPL-2.0)"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            }
+        ],
+        "description": "Efficient JavaScript minification in PHP",
+        "homepage": "https://github.com/tchwork/jsqueeze",
+        "keywords": [
+            "compression",
+            "javascript",
+            "minification"
         ]
     }
 ]
