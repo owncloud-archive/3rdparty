@@ -107,6 +107,7 @@ class CallbackWrapper extends Wrapper {
 		$result = parent::stream_close();
 		if (is_callable($this->closeCallback)) {
 			call_user_func($this->closeCallback);
+			$this->closeCallback = null;
 		}
 		return $result;
 	}
