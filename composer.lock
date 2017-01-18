@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cd6381c98bfdef8fc8782e3ba2101dde",
-    "content-hash": "40a1c2115611f850a7227831db855f4f",
+    "hash": "ea76894840868cdf7122b40c5a6b8674",
+    "content-hash": "28e6cdd2f05834c97cf016948b10a17c",
     "packages": [
         {
             "name": "bantu/ini-get-wrapper",
@@ -911,16 +911,16 @@
         },
         {
             "name": "icewind/streams",
-            "version": "0.4.1",
+            "version": "0.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/icewind1991/Streams.git",
-                "reference": "d3620e8dc410c86c2ba55579803679c4e0b289ac"
+                "reference": "6bfd2fdbd99319f5e010d0a684409189a562cb1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/icewind1991/Streams/zipball/d3620e8dc410c86c2ba55579803679c4e0b289ac",
-                "reference": "d3620e8dc410c86c2ba55579803679c4e0b289ac",
+                "url": "https://api.github.com/repos/icewind1991/Streams/zipball/6bfd2fdbd99319f5e010d0a684409189a562cb1e",
+                "reference": "6bfd2fdbd99319f5e010d0a684409189a562cb1e",
                 "shasum": ""
             },
             "require": {
@@ -948,7 +948,7 @@
                 }
             ],
             "description": "A set of generic stream wrappers",
-            "time": "2016-06-02 14:37:52"
+            "time": "2016-12-02 14:21:23"
         },
         {
             "name": "interfasys/lognormalizer",
