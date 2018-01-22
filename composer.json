@@ -38,6 +38,8 @@
 		"symfony/polyfill-php70": "^1.0",
 		"symfony/polyfill-php55": "^1.0",
 		"symfony/polyfill-php56": "^1.0",
-		"lukasreschke/id3parser": "^0.0.1"
+		"lukasreschke/id3parser": "^0.0.1",
+		"zendframework/zend-inputfilter": "^2.8",
+		"zendframework/zend-servicemanager": "^3.3"
 	}
 }
